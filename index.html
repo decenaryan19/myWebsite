@@ -1,688 +1,1360 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="night">
+<html lang="en" class="scroll-smooth">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Decena Ryan — QA Automation Engineer & Digital Operations Specialist</title>
-<meta name="description" content="Decena Ryan — QA Automation Engineer & Digital Operations Specialist bridging software testing with business operations." />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-<style>
-/* ========== TOKENS ========== */
-:root {
-  --bg: #f7f7f5;
-  --bg-2: #ececea;
-  --fg: #0e0e10;
-  --fg-2: #4a4a52;
-  --muted: #8a8a93;
-  --line: rgba(14,14,16,.10);
-  --card: #ffffff;
-  --accent: #2b2b2e;
-  --accent-glow: rgba(0,0,0,.06);
-  --shadow: 0 30px 60px -30px rgba(0,0,0,.18);
-  --radius: 18px;
-  --ease: cubic-bezier(.22,.61,.36,1);
-}
-[data-theme="night"] {
-  --bg: #08080a;
-  --bg-2: #0f0f12;
-  --fg: #f4f4f6;
-  --fg-2: #b5b5bd;
-  --muted: #6c6c75;
-  --line: rgba(255,255,255,.08);
-  --card: #111114;
-  --accent: #d4af6a; /* luxury gold */
-  --accent-glow: rgba(212,175,106,.18);
-  --shadow: 0 30px 80px -30px rgba(0,0,0,.7);
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--fg);
-  line-height: 1.55;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-  transition: background .6s var(--ease), color .6s var(--ease);
-}
-img { max-width: 100%; display: block; }
-a { color: inherit; text-decoration: none; }
-.container { max-width: 1240px; margin: 0 auto; padding: 0 28px; }
-
-/* ========== NAV ========== */
-.nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-  backdrop-filter: blur(18px);
-  background: color-mix(in oklab, var(--bg) 70%, transparent);
-  border-bottom: 1px solid var(--line);
-  transition: background .5s var(--ease);
-}
-.nav-inner {
-  max-width: 1240px; margin: 0 auto; padding: 18px 28px;
-  display: flex; align-items: center; justify-content: space-between; gap: 24px;
-}
-.logo { font-weight: 800; font-size: 20px; letter-spacing: -.02em; }
-.logo span { color: var(--accent); }
-.nav-links { display: flex; gap: 32px; list-style: none; }
-.nav-links a { font-size: 14px; font-weight: 500; color: var(--fg-2); transition: color .3s; }
-.nav-links a:hover { color: var(--accent); }
-@media (max-width: 720px) { .nav-links { display: none; } }
-
-/* THEME TOGGLE */
-.theme-toggle { background: none; border: none; cursor: pointer; padding: 0; }
-.toggle-track {
-  width: 56px; height: 30px; border-radius: 999px;
-  background: var(--bg-2); border: 1px solid var(--line);
-  display: flex; align-items: center; padding: 3px;
-  transition: background .4s;
-}
-.toggle-thumb {
-  width: 24px; height: 24px; border-radius: 50%;
-  background: var(--fg); color: var(--bg);
-  display: grid; place-items: center;
-  transform: translateX(0);
-  transition: transform .5s var(--ease), background .4s;
-}
-[data-theme="night"] .toggle-thumb { transform: translateX(26px); background: var(--accent); color: #08080a; }
-.toggle-thumb svg { width: 14px; height: 14px; position: absolute; transition: opacity .3s; }
-.icon-sun { opacity: 1; } .icon-moon { opacity: 0; }
-[data-theme="night"] .icon-sun { opacity: 0; }
-[data-theme="night"] .icon-moon { opacity: 1; }
-
-/* ========== HERO ========== */
-.hero {
-  position: relative; min-height: 100vh;
-  display: flex; align-items: center; padding: 120px 0 80px;
-  overflow: hidden;
-}
-.hero-bg {
-  position: absolute; inset: 0; z-index: 0;
-  background:
-    radial-gradient(800px 500px at 80% 20%, var(--accent-glow), transparent 60%),
-    radial-gradient(600px 400px at 10% 80%, var(--accent-glow), transparent 60%);
-  pointer-events: none;
-}
-.hero-inner { position: relative; z-index: 1; }
-.eyebrow {
-  font-size: 12px; letter-spacing: .25em; text-transform: uppercase;
-  color: var(--muted); margin-bottom: 24px; font-weight: 600;
-}
-.hero-title {
-  font-size: clamp(2.4rem, 6vw, 5.2rem);
-  font-weight: 800; letter-spacing: -.035em; line-height: 1.02;
-  margin-bottom: 28px;
-}
-.hero-title em { font-style: italic; font-weight: 400; color: var(--accent); }
-.accent { color: var(--accent); }
-.hero-sub { font-size: 18px; color: var(--fg-2); margin-bottom: 40px; font-weight: 400; }
-.hero-cta { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 80px; }
-.btn {
-  display: inline-flex; align-items: center; justify-content: center;
-  padding: 16px 30px; border-radius: 999px; font-weight: 600; font-size: 15px;
-  border: 1px solid transparent; cursor: pointer;
-  transition: transform .3s var(--ease), background .3s, color .3s, border-color .3s;
-}
-.btn.full { width: 100%; }
-.btn-primary { background: var(--fg); color: var(--bg); }
-.btn-primary:hover { transform: translateY(-2px); }
-[data-theme="night"] .btn-primary { background: var(--accent); color: #08080a; }
-.btn-ghost { border-color: var(--line); color: var(--fg); }
-.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
-
-.hero-stats {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px;
-  max-width: 600px; padding-top: 40px; border-top: 1px solid var(--line);
-}
-.hero-stats strong { display: block; font-size: 32px; font-weight: 800; letter-spacing: -.02em; }
-.hero-stats span { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .15em; }
-.scroll-cue {
-  position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-  font-size: 10px; letter-spacing: .4em; color: var(--muted);
-  writing-mode: vertical-rl; animation: bob 2.5s ease-in-out infinite;
-}
-@keyframes bob { 0%,100%{transform:translate(-50%,0)} 50%{transform:translate(-50%,8px)} }
-
-/* ========== SECTIONS ========== */
-.section { padding: 140px 0; position: relative; }
-.section.alt { background: var(--bg-2); }
-.section-head { margin-bottom: 70px; max-width: 800px; }
-.section-head h2 {
-  font-size: clamp(2rem, 4.5vw, 3.6rem);
-  font-weight: 800; letter-spacing: -.03em; line-height: 1.05;
-}
-
-/* ========== TABS ========== */
-.tabs {
-  display: inline-flex; gap: 4px; padding: 6px;
-  background: var(--bg-2); border: 1px solid var(--line);
-  border-radius: 999px; margin-bottom: 50px;
-}
-.tab {
-  padding: 12px 24px; border-radius: 999px; border: none; cursor: pointer;
-  font-family: inherit; font-weight: 600; font-size: 14px;
-  background: transparent; color: var(--fg-2);
-  transition: background .3s, color .3s;
-}
-.tab.active { background: var(--fg); color: var(--bg); }
-[data-theme="night"] .tab.active { background: var(--accent); color: #08080a; }
-
-.tab-panel { display: none; animation: fadeUp .6s var(--ease); }
-.tab-panel.active { display: block; }
-@keyframes fadeUp { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
-
-/* ========== BENTO ========== */
-.bento {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: 220px; gap: 16px;
-}
-.bento-item {
-  position: relative; border-radius: var(--radius); overflow: hidden;
-  background: var(--card) center/cover no-repeat;
-  border: 1px solid var(--line); cursor: pointer;
-  transition: transform .6s var(--ease), box-shadow .5s;
-}
-.bento-item::before {
-  content: ''; position: absolute; inset: 0;
-  background-image: var(--img); background-size: cover; background-position: center;
-  transition: transform .8s var(--ease);
-}
-.bento-item::after {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,.85));
-}
-.bento-item:hover { box-shadow: var(--shadow); }
-.bento-item:hover::before { transform: scale(1.08); }
-.bento-item.large { grid-column: span 2; grid-row: span 2; }
-.bento-item.wide { grid-column: span 2; }
-.bento-meta {
-  position: absolute; bottom: 22px; left: 22px; right: 22px; z-index: 2; color: #fff;
-}
-.bento-meta span { font-size: 11px; text-transform: uppercase; letter-spacing: .2em; opacity: .8; }
-.bento-meta h3 { font-size: 20px; font-weight: 700; margin-top: 6px; }
-@media (max-width: 800px) {
-  .bento { grid-template-columns: repeat(2, 1fr); }
-  .bento-item.large, .bento-item.wide { grid-column: span 2; }
-  .bento-item.large { grid-row: span 1; }
-}
-
-/* ========== VIDEO ========== */
-.video-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-.video-card {
-  position: relative; aspect-ratio: 16/10; border-radius: var(--radius);
-  overflow: hidden; cursor: pointer;
-  background: var(--card) center/cover no-repeat;
-  border: 1px solid var(--line);
-  transition: transform .5s var(--ease);
-}
-.video-card::before {
-  content: ''; position: absolute; inset: 0;
-  background-image: var(--thumb); background-size: cover; background-position: center;
-  transition: transform .8s var(--ease);
-}
-.video-card::after {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,.1), rgba(0,0,0,.7));
-}
-.video-card:hover::before { transform: scale(1.06); }
-.play {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-  width: 72px; height: 72px; border-radius: 50%; z-index: 2;
-  background: rgba(255,255,255,.95); color: #08080a;
-  display: grid; place-items: center;
-  transition: transform .3s, background .3s;
-}
-[data-theme="night"] .play { background: var(--accent); }
-.play svg { width: 28px; height: 28px; margin-left: 4px; }
-.video-card:hover .play { transform: translate(-50%,-50%) scale(1.1); }
-.video-meta { position: absolute; bottom: 22px; left: 22px; z-index: 2; color: #fff; }
-.video-meta span { font-size: 11px; text-transform: uppercase; letter-spacing: .2em; opacity: .8; }
-.video-meta h3 { font-size: 20px; font-weight: 700; margin-top: 6px; }
-@media (max-width: 720px) { .video-grid { grid-template-columns: 1fr; } }
-
-/* ========== SOCIAL ========== */
-.social-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-.social-card {
-  display: flex; gap: 24px; padding: 24px; border-radius: var(--radius);
-  background: var(--card); border: 1px solid var(--line);
-  transition: transform .4s var(--ease), border-color .4s;
-}
-.social-card:hover { transform: translateY(-4px); border-color: var(--accent); }
-.social-thumb {
-  width: 130px; height: 130px; border-radius: 14px; flex-shrink: 0;
-  background-size: cover; background-position: center;
-}
-.social-body { display: flex; flex-direction: column; justify-content: center; }
-.badge {
-  display: inline-block; font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
-  padding: 5px 10px; border: 1px solid var(--accent); color: var(--accent);
-  border-radius: 999px; margin-bottom: 12px; width: fit-content; font-weight: 700;
-}
-.social-body h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; letter-spacing: -.01em; }
-.social-body p { color: var(--fg-2); font-size: 14px; }
-@media (max-width: 800px) {
-  .social-grid { grid-template-columns: 1fr; }
-  .social-card { flex-direction: column; }
-  .social-thumb { width: 100%; height: 180px; }
-}
-
-/* ========== EXPERIENCE ========== */
-.exp-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-.exp-card {
-  padding: 36px; border-radius: var(--radius);
-  background: var(--card); border: 1px solid var(--line);
-  position: relative; transition: transform .4s var(--ease), border-color .4s;
-}
-.exp-card::before {
-  content: ''; position: absolute; left: 0; top: 36px; bottom: 36px; width: 3px;
-  background: var(--accent); border-radius: 3px;
-}
-.exp-card:hover { transform: translateY(-4px); border-color: var(--accent); }
-.exp-year { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 14px; }
-.exp-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 10px; letter-spacing: -.01em; }
-.exp-card p { color: var(--fg-2); font-size: 15px; }
-@media (max-width: 720px) { .exp-grid { grid-template-columns: 1fr; } }
-
-/* ========== SKILLS ========== */
-.skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-.skill-card {
-  padding: 32px; border-radius: var(--radius);
-  background: var(--card); border: 1px solid var(--line);
-  position: relative; transition: transform .4s var(--ease), border-color .4s;
-}
-.skill-card:hover { transform: translateY(-4px); border-color: var(--accent); }
-.skill-card .dot {
-  display: block; width: 8px; height: 8px; border-radius: 50%;
-  background: var(--accent); margin-bottom: 18px;
-  box-shadow: 0 0 0 6px var(--accent-glow);
-}
-.skill-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 14px; letter-spacing: -.01em; }
-.skill-card ul { list-style: none; }
-.skill-card li { font-size: 14px; color: var(--fg-2); padding: 4px 0; }
-@media (max-width: 900px) { .skills-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 520px) { .skills-grid { grid-template-columns: 1fr; } }
-
-/* ========== CONTACT ========== */
-.contact { padding-bottom: 0; }
-.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-.contact-sub { color: var(--fg-2); font-size: 17px; margin: 16px 0 28px; }
-.contact-info { display: flex; flex-direction: column; gap: 10px; padding-bottom: 30px; border-bottom: 1px solid var(--line); margin-bottom: 30px; }
-.contact-info a { font-size: 20px; font-weight: 600; color: var(--accent); }
-.contact-info span { font-size: 14px; color: var(--muted); }
-.map {
-  width: 100%; aspect-ratio: 16/10; border-radius: var(--radius);
-  overflow: hidden; border: 1px solid var(--line); filter: grayscale(1) contrast(.95);
-}
-[data-theme="night"] .map { filter: grayscale(1) invert(.92) contrast(.85); }
-
-/* FORM */
-.contact-form { display: flex; flex-direction: column; gap: 18px; }
-.field { position: relative; }
-.field input, .field textarea {
-  width: 100%; background: transparent; border: none;
-  border-bottom: 1px solid var(--line);
-  padding: 22px 0 10px; font-family: inherit; font-size: 16px; color: var(--fg);
-  outline: none; resize: none;
-  transition: border-color .4s;
-}
-.field label {
-  position: absolute; left: 0; top: 22px; font-size: 16px; color: var(--muted);
-  pointer-events: none; transition: all .3s var(--ease);
-}
-.field input:focus, .field textarea:focus { border-color: var(--accent); }
-.field input:focus + label, .field input:valid + label,
-.field textarea:focus + label, .field textarea:valid + label {
-  top: 0; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: var(--accent);
-}
-.sent { color: var(--accent); font-size: 14px; margin-top: 10px; }
-
-.footer {
-  margin-top: 100px; padding: 30px 0;
-  border-top: 1px solid var(--line);
-  display: flex; justify-content: space-between; align-items: center;
-  font-size: 13px; color: var(--muted);
-}
-.footer div { display: flex; gap: 24px; }
-.footer a:hover { color: var(--accent); }
-@media (max-width: 800px) { .contact-grid { grid-template-columns: 1fr; gap: 50px; } .footer { flex-direction: column; gap: 16px; } }
-
-/* ========== REVEAL ========== */
-.reveal { opacity: 0; transform: translateY(40px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
-.reveal.in { opacity: 1; transform: translateY(0); }
-
-/* ========== LIGHTBOX ========== */
-.lightbox {
-  position: fixed; inset: 0; z-index: 100;
-  background: rgba(0,0,0,.92); backdrop-filter: blur(20px);
-  display: none; align-items: center; justify-content: center; padding: 40px;
-  opacity: 0; transition: opacity .4s;
-}
-.lightbox.open { display: flex; opacity: 1; }
-.lb-frame {
-  width: 100%; max-width: 1100px; aspect-ratio: 16/9;
-  border-radius: var(--radius); overflow: hidden;
-  box-shadow: 0 40px 100px rgba(0,0,0,.6);
-  transform: scale(.95); transition: transform .4s var(--ease);
-}
-.lightbox.open .lb-frame { transform: scale(1); }
-.lb-frame iframe { width: 100%; height: 100%; border: 0; }
-.lb-close {
-  position: absolute; top: 30px; right: 36px;
-  width: 48px; height: 48px; border-radius: 50%;
-  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
-  color: #fff; font-size: 28px; cursor: pointer;
-  transition: background .3s;
-}
-.lb-close:hover { background: rgba(255,255,255,.2); }
-
-</style>
-</head>
-<body>
-
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="#top" class="logo">DR<span>.</span></a>
-    <ul class="nav-links">
-      <li><a href="#work">Work</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-      <span class="toggle-track">
-        <span class="toggle-thumb">
-          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        </span>
-      </span>
-    </button>
-  </div>
-</nav>
-
-<header id="top" class="hero">
-  <div class="hero-bg"></div>
-  <div class="container hero-inner reveal">
-    <p class="eyebrow">Portfolio · 2026</p>
-    <h1 class="hero-title">
-      Hi, I'm <span class="accent">Decena Ryan</span>.<br/>
-      I automate software testing,<br/>
-      optimize <em>digital</em> operations, and build brands.
-    </h1>
-    <p class="hero-sub">QA Automation · Digital Operations & CRM · Web Development</p>
-    <div class="hero-cta">
-      <a href="#work" class="btn btn-primary">View Work</a>
-      <a href="#contact" class="btn btn-ghost">Let's Talk →</a>
-    </div>
-    <div class="hero-stats">
-      <div><strong>6+ Yrs</strong><span>Experience</span></div>
-      <div><strong>80%</strong><span>Regression Cut</span></div>
-      <div><strong>40+</strong><span>Sites Shipped</span></div>
-    </div>
-  </div>
-  <div class="scroll-cue">SCROLL</div>
-</header>
-
-<section id="work" class="section">
-  <div class="container">
-    <div class="section-head reveal">
-      <h2><span class="accent">Portfolio</span></h2>
-    </div>
-
-    <div class="tabs reveal">
-      <button class="tab active" data-tab="web">Automation & Web</button>
-      <button class="tab" data-tab="video">Production & AV</button>
-      <button class="tab" data-tab="social">Digital Ops & SMM</button>
-    </div>
-
-    <div class="tab-panel active" id="panel-web">
-      <div class="bento">
-        <div class="bento-item large reveal" data-img="https://images.unsplash.com/photo-1551434678-e076c223a692?w=1200">
-          <div class="bento-meta"><span>Mobile Automation</span><h3>Sun Life BDD Framework (Java/Appium)</h3></div>
-        </div>
-        <div class="bento-item reveal" data-img="https://images.unsplash.com/photo-1517292987719-0369a794ec0f?w=900">
-          <div class="bento-meta"><span>Web Automation</span><h3>Selenium & Robot Framework Scripts</h3></div>
-        </div>
-        <div class="bento-item reveal" data-img="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=900">
-          <div class="bento-meta"><span>Performance</span><h3>LoadRunner & API Testing</h3></div>
-        </div>
-        <div class="bento-item reveal" data-img="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=900">
-          <div class="bento-meta"><span>ERP Dev</span><h3>Custom Odoo Modules (Python)</h3></div>
-        </div>
-        <div class="bento-item wide reveal" data-img="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1400">
-          <div class="bento-meta"><span>Web Dev & SEO</span><h3>WordPress & Elementor Brands</h3></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tab-panel" id="panel-video">
-      <div class="video-grid">
-        <div class="video-card reveal" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ" data-thumb="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=900">
-          <div class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
-          <div class="video-meta"><span>Live Stream</span><h3>Church Ministry Digital Production</h3></div>
-        </div>
-        <div class="video-card reveal" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ" data-thumb="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=900">
-          <div class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
-          <div class="video-meta"><span>Short-Form</span><h3>CapCut Viral Video Edits</h3></div>
-        </div>
-        <div class="video-card reveal" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ" data-thumb="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=900">
-          <div class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
-          <div class="video-meta"><span>AV Setup</span><h3>Technical Audio/Visual Mastery</h3></div>
-        </div>
-        <div class="video-card reveal" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ" data-thumb="https://images.unsplash.com/photo-1500627964684-141351970a7f?w=900">
-          <div class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
-          <div class="video-meta"><span>OBS Studio</span><h3>Advanced Broadcast Engineering</h3></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tab-panel" id="panel-social">
-      <div class="social-grid">
-        <div class="social-card reveal">
-          <div class="social-thumb" style="background-image:url('https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800')"></div>
-          <div class="social-body">
-            <div class="badge">CRM Operations</div>
-            <h3>GoHighLevel & Lead Connector</h3>
-            <p>Managing CRM pipelines, implementing automations, system workflows, and user security audits.</p>
-          </div>
-        </div>
-        <div class="social-card reveal">
-          <div class="social-thumb" style="background-image:url('https://images.unsplash.com/photo-1611926653458-09294b3142bf?w=800')"></div>
-          <div class="social-body">
-            <div class="badge">SEO Strategy</div>
-            <h3>On-Page SEO Optimization</h3>
-            <p>Optimizing WordPress service pages to maximize search visibility, ranking, and speed performance.</p>
-          </div>
-        </div>
-        <div class="social-card reveal">
-          <div class="social-thumb" style="background-image:url('https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=800')"></div>
-          <div class="social-body">
-            <div class="badge">Church Ministry</div>
-            <h3>Media & Tech Leadership</h3>
-            <p>Guiding complete digital brand alignment across online assets and physical systems since 2018.</p>
-          </div>
-        </div>
-        <div class="social-card reveal">
-          <div class="social-thumb" style="background-image:url('https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=800')"></div>
-          <div class="social-body">
-            <div class="badge">Project Tracking</div>
-            <h3>Jira & Agile Workflows</h3>
-            <p>Managing regression cycles, full stack tasks, and bug resolving with maximum technical integrity.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="experience" class="section alt">
-  <div class="container">
-    <div class="section-head reveal">
-      <h2><span class="accent">Experience</span></h2>
-    </div>
-    <div class="exp-grid">
-      <article class="exp-card reveal">
-        <div class="exp-year">2025 — 2026</div>
-        <h3>Mobile Automation & Performance Tester</h3>
-        <p><strong>Ascendion [Sun Life]</strong> — Engineered a BDD Mobile Framework (Java/Appium), cutting regression time by 80%. Architected automated suites with POM, boosting scalability by 30% via LoadRunner.</p>
-      </article>
-      <article class="exp-card reveal">
-        <div class="exp-year">2023 — 2025</div>
-        <h3>QA Automation Tester</h3>
-        <p><strong>We Support Inc. [Globe Telecom]</strong> — Automated test scripts using Java, Selenium, and Robot Framework across Web and Mobile. Handled rigorous regression cycles and Jira bug resolution.</p>
-      </article>
-      <article class="exp-card reveal">
-        <div class="exp-year">2024 — 2026</div>
-        <h3>Digital Operations & Marketing Specialist</h3>
-        <p><strong>Freelance & Consulting</strong> — Managed GoHighLevel CRM automations and audits. Developed responsive WordPress sites using Elementor and executed On-Page SEO strategies.</p>
-      </article>
-      <article class="exp-card reveal">
-        <div class="exp-year">2022 — 2023</div>
-        <h3>Jr. Programmer</h3>
-        <p><strong>We Support Inc. [Sky Cable]</strong> — Built custom Odoo modules using Python and XML while executing complex large-scale data migrations.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section id="skills" class="section">
-  <div class="container">
-    <div class="section-head reveal">
-      <h2><span class="accent">Skills</span></h2>
-    </div>
-    <div class="skills-grid">
-      <div class="skill-card reveal">
-        <span class="dot"></span>
-        <h3>QA Automation</h3>
-        <ul><li>Appium · Selenium · Java</li><li>Cucumber (BDD) · POM</li><li>Robot Framework</li></ul>
-      </div>
-      <div class="skill-card reveal">
-        <span class="dot"></span>
-        <h3>Performance & API</h3>
-        <ul><li>LoadRunner (LRE) · VuGen</li><li>Postman · REST API</li><li>Jira · GitHub · CI/CD</li></ul>
-      </div>
-      <div class="skill-card reveal">
-        <span class="dot"></span>
-        <h3>Digital Operations</h3>
-        <ul><li>GoHighLevel · CRM Auto</li><li>WordPress · Elementor</li><li>Odoo Dev · Python · XML</li></ul>
-      </div>
-      <div class="skill-card reveal">
-        <span class="dot"></span>
-        <h3>Creative & Production</h3>
-        <ul><li>Video Editing (CapCut)</li><li>Canva · OBS Studio</li><li>AV Systems · Streaming</li></ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="contact" class="section contact">
-  <div class="container contact-grid">
-    <div class="reveal">
-      <h2><span class="accent">Contact</span></h2>
-      <h2>Let's build something <span class="accent">unforgettable</span>.</h2>
-      <p class="contact-sub">Available for QA roles, workflow engineering, and digital retainers. Guided by integrity.</p>
-      <div class="contact-info">
-        <a href="mailto:ryan.barbacena.decena@gmail.com">ryan.barbacena.decena@gmail.com</a>
-        <span>Novaliches, Quezon City, Philippines · Remote Worldwide</span>
-      </div>
-      <div class="map">
-        <iframe loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=121.0000%2C14.6800%2C121.0800%2C14.7400&layer=mapnik" style="border:0;width:100%;height:100%"></iframe>
-      </div>
-    </div>
-    <form class="contact-form reveal" onsubmit="event.preventDefault(); this.querySelector('.sent').style.display='block';">
-      <div class="field"><input type="text" required /><label>Your name</label></div>
-      <div class="field"><input type="email" required /><label>Email</label></div>
-      <div class="field"><input type="text" required /><label>Company / Brand</label></div>
-      <div class="field"><textarea required rows="4"></textarea><label>Tell me about your project or role</label></div>
-      <button type="submit" class="btn btn-primary full">Send Message</button>
-      <p class="sent" style="display:none">✓ Message sent. I'll be in touch within 24 hours.</p>
-    </form>
-  </div>
-  <footer class="footer">
-    <span>© 2026 Decena Ryan. All rights reserved.</span>
-    <div><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">YouTube</a></div>
-  </footer>
-</section>
-
-<div class="lightbox" id="lightbox">
-  <button class="lb-close" id="lbClose" aria-label="Close">×</button>
-  <div class="lb-frame"><iframe id="lbFrame" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
-</div>
-
-<script>
-// THEME TOGGLE
-const root = document.documentElement;
-const toggle = document.getElementById('themeToggle');
-const saved = localStorage.getItem('theme');
-if (saved) root.setAttribute('data-theme', saved);
-toggle.addEventListener('click', () => {
-  const next = root.getAttribute('data-theme') === 'night' ? 'day' : 'night';
-  root.setAttribute('data-theme', next);
-  localStorage.setItem('theme', next);
-});
-
-// TABS
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    const id = tab.dataset.tab;
-    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t === tab));
-    document.querySelectorAll('.tab-panel').forEach(p => {
-      p.classList.toggle('active', p.id === `panel-${id}`);
-    });
-  });
-});
-
-// BENTO / VIDEO background images via data attr
-document.querySelectorAll('[data-img]').forEach(el => {
-  el.style.setProperty('--img', `url('${el.dataset.img}')`);
-  el.style.backgroundImage = `url('${el.dataset.img}')`;
-});
-document.querySelectorAll('[data-thumb]').forEach(el => {
-  el.style.setProperty('--thumb', `url('${el.dataset.thumb}')`);
-  el.style.backgroundImage = `url('${el.dataset.thumb}')`;
-});
-
-// SCROLL REVEAL
-const io = new IntersectionObserver((entries) => {
-  entries.forEach((e, i) => {
-    if (e.isIntersecting) {
-      setTimeout(() => e.target.classList.add('in'), i * 60);
-      io.unobserve(e.target);
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ryan Decena | Web · GHL · Social Media</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/favicon.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            slate: { 950: '#0F172A' },
+            cyan: { neon: '#38BDF8' },
+            emerald: { neon: '#10B981' },
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          boxShadow: {
+            'cyan-glow': '0 0 20px rgba(56, 189, 248, 0.35)',
+            'emerald-glow': '0 0 20px rgba(16, 185, 129, 0.35)',
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      background-color: #0F172A;
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(56, 189, 248, 0.12), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 50%, rgba(16, 185, 129, 0.06), transparent),
+        linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+      background-size: auto, auto, 48px 48px, 48px 48px;
     }
-  });
-}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
-document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    .hero-portrait {
+      mask-image: linear-gradient(90deg, transparent 0%, black 28%, black 100%),
+                  linear-gradient(180deg, black 55%, transparent 100%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 28%, black 100%),
+                          linear-gradient(180deg, black 55%, transparent 100%);
+      mask-composite: intersect;
+      -webkit-mask-composite: source-in;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-up {
+      animation: fadeUp 0.7s ease forwards;
+    }
+    .delay-1 { animation-delay: 0.1s; opacity: 0; }
+    .delay-2 { animation-delay: 0.2s; opacity: 0; }
+    .delay-3 { animation-delay: 0.3s; opacity: 0; }
+    .story-block {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .story-block.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .story-block.delay-a { transition-delay: 0.08s; }
+    .story-block.delay-b { transition-delay: 0.16s; }
+    .story-block.delay-c { transition-delay: 0.24s; }
+    .chapter-rail a.active {
+      color: #38BDF8;
+    }
+    .chapter-rail a.active .rail-dot {
+      background: #38BDF8;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.7);
+      transform: scale(1.25);
+    }
+    .gallery-filter.active {
+      background: #38BDF8;
+      color: #0F172A;
+      border-color: #38BDF8;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.35);
+    }
+    .badge-neon {
+      transition: all 0.25s ease;
+    }
+    .badge-neon:hover {
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.45);
+      border-color: #38BDF8;
+      color: #38BDF8;
+      transform: translateY(-1px);
+    }
+    .badge-neon-emerald:hover {
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.45);
+      border-color: #10B981;
+      color: #10B981;
+    }
+    #parallax-orb-1, #parallax-orb-2 {
+      will-change: transform;
+    }
+    #scroll-top {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity 0.25s ease, transform 0.25s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    #scroll-top.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    /* Premium sticky scroll (21st.dev / Aceternity-style) */
+    .sticky-scroll {
+      position: relative;
+    }
+    .sticky-card {
+      opacity: 0.28;
+      filter: blur(0.5px);
+      transform: scale(0.985);
+      transition: opacity 0.45s ease, transform 0.45s ease, filter 0.45s ease, border-color 0.35s ease;
+    }
+    .sticky-card.is-active {
+      opacity: 1;
+      filter: blur(0);
+      transform: scale(1);
+    }
+    .sticky-visual {
+      opacity: 0;
+      transform: translateY(18px) scale(0.98);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+    }
+    .sticky-visual.is-active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+    .beam-line {
+      background: linear-gradient(to bottom, transparent, #38BDF8, #10B981, transparent);
+      transform-origin: top;
+      transform: scaleY(0);
+    }
+    #scroll-progress {
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+    .sticky-card.is-active .chapter-accent {
+      opacity: 1;
+      transform: scaleY(1);
+    }
+    .chapter-accent {
+      opacity: 0;
+      transform: scaleY(0.4);
+      transform-origin: top;
+      transition: opacity 0.4s ease, transform 0.45s ease;
+    }
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal-item.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .gallery-item {
+      opacity: 0;
+      transform: translateY(24px) scale(0.98);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .gallery-item.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .gallery-item.hidden-item {
+      display: none;
+      opacity: 0;
+    }
+    .contact-glow {
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(56,189,248,0.12), transparent 70%);
+    }
+    .mock-browser {
+      box-shadow: 0 0 0 1px rgba(56,189,248,0.15), 0 20px 50px rgba(0,0,0,0.35);
+    }
+    .funnel-step {
+      transition: transform 0.35s ease, border-color 0.35s ease;
+    }
+    .sticky-visual.is-active .funnel-step:nth-child(1) { transition-delay: 0.05s; }
+    .sticky-visual.is-active .funnel-step:nth-child(2) { transition-delay: 0.12s; }
+    .sticky-visual.is-active .funnel-step:nth-child(3) { transition-delay: 0.2s; }
+    @media (prefers-reduced-motion: reduce) {
+      .sticky-card, .sticky-visual, .story-block, .reveal-item, .gallery-item {
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="font-sans text-slate-200 antialiased">
+  <!-- Top scroll progress -->
+  <div class="fixed top-0 inset-x-0 z-[60] h-0.5 bg-transparent pointer-events-none">
+    <div id="scroll-progress" class="h-full bg-gradient-to-r from-[#38BDF8] to-[#10B981]"></div>
+  </div>
 
-// PARALLAX HERO
-const heroBg = document.querySelector('.hero-bg');
-window.addEventListener('scroll', () => {
-  const y = window.scrollY;
-  if (heroBg && y < window.innerHeight) {
-    heroBg.style.transform = `translateY(${y * 0.3}px)`;
-  }
-}, { passive: true });
+  <!-- Navigation -->
+  <header class="fixed top-0 inset-x-0 z-50 border-b border-slate-800/80 bg-slate-950/85 backdrop-blur-md">
+    <nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+      <a href="#home" class="font-mono text-xl font-bold tracking-tight text-[#38BDF8] hover:text-white transition-colors">
+        RD<span class="text-[#10B981]">_</span>
+      </a>
 
-// LIGHTBOX
-const lb = document.getElementById('lightbox');
-const lbFrame = document.getElementById('lbFrame');
-const lbClose = document.getElementById('lbClose');
-document.querySelectorAll('.video-card').forEach(card => {
-  card.addEventListener('click', () => {
-    lbFrame.src = card.dataset.video + '?autoplay=1';
-    lb.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  });
-});
-function closeLb() {
-  lb.classList.remove('open');
-  lbFrame.src = '';
-  document.body.style.overflow = '';
-}
-lbClose.addEventListener('click', closeLb);
-lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+      <ul class="hidden md:flex items-center gap-6 lg:gap-8 text-sm font-medium text-slate-300">
+        <li><a href="#web" class="hover:text-[#38BDF8] transition-colors">Web</a></li>
+        <li><a href="#ghl" class="hover:text-[#38BDF8] transition-colors">GHL</a></li>
+        <li><a href="#social" class="hover:text-[#38BDF8] transition-colors">Social</a></li>
+        <li><a href="#gallery" class="hover:text-[#38BDF8] transition-colors">Gallery</a></li>
+        <li><a href="#contact" class="hover:text-[#38BDF8] transition-colors">Contact</a></li>
+      </ul>
 
-</script>
+      <div class="flex items-center gap-3">
+        <a href="#contact" class="hidden sm:inline-flex items-center rounded-lg bg-[#38BDF8] px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-[#7dd3fc] hover:shadow-cyan-glow transition-all">
+          Hire Me
+        </a>
+        <button id="menu-toggle" type="button" aria-label="Toggle menu" class="md:hidden rounded-lg border border-slate-700 p-2 text-slate-300 hover:border-[#38BDF8] hover:text-[#38BDF8] transition-colors">
+          <i data-lucide="menu" class="w-5 h-5" id="menu-icon"></i>
+        </button>
+      </div>
+    </nav>
+
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-800 bg-slate-950/95">
+      <ul class="flex flex-col gap-1 px-4 py-4 text-sm font-medium">
+        <li><a href="#web" class="mobile-link block rounded-lg px-3 py-2.5 text-slate-300 hover:bg-slate-800 hover:text-[#38BDF8] transition-colors">Web</a></li>
+        <li><a href="#ghl" class="mobile-link block rounded-lg px-3 py-2.5 text-slate-300 hover:bg-slate-800 hover:text-[#38BDF8] transition-colors">GHL</a></li>
+        <li><a href="#social" class="mobile-link block rounded-lg px-3 py-2.5 text-slate-300 hover:bg-slate-800 hover:text-[#38BDF8] transition-colors">Social</a></li>
+        <li><a href="#gallery" class="mobile-link block rounded-lg px-3 py-2.5 text-slate-300 hover:bg-slate-800 hover:text-[#38BDF8] transition-colors">Gallery</a></li>
+        <li><a href="#contact" class="mobile-link block rounded-lg px-3 py-2.5 text-slate-300 hover:bg-slate-800 hover:text-[#38BDF8] transition-colors">Contact</a></li>
+        <li class="pt-2">
+          <a href="#contact" class="mobile-link block rounded-lg bg-[#38BDF8] px-3 py-2.5 text-center font-semibold text-slate-950 hover:bg-[#7dd3fc] transition-colors">Hire Me</a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Chapter progress rail (desktop) -->
+  <aside class="chapter-rail fixed left-4 top-1/2 z-40 hidden -translate-y-1/2 xl:flex flex-col gap-5" aria-label="Story chapters">
+    <a href="#web" data-rail="web" class="group flex items-center gap-3 text-xs font-mono text-slate-500 hover:text-[#38BDF8] transition-colors">
+      <span class="rail-dot h-2 w-2 rounded-full bg-slate-600 transition-all group-hover:bg-[#38BDF8]"></span>
+      <span>Web</span>
+    </a>
+    <a href="#ghl" data-rail="ghl" class="group flex items-center gap-3 text-xs font-mono text-slate-500 hover:text-[#38BDF8] transition-colors">
+      <span class="rail-dot h-2 w-2 rounded-full bg-slate-600 transition-all group-hover:bg-[#38BDF8]"></span>
+      <span>GHL</span>
+    </a>
+    <a href="#social" data-rail="social" class="group flex items-center gap-3 text-xs font-mono text-slate-500 hover:text-[#38BDF8] transition-colors">
+      <span class="rail-dot h-2 w-2 rounded-full bg-slate-600 transition-all group-hover:bg-[#38BDF8]"></span>
+      <span>Social</span>
+    </a>
+    <a href="#gallery" data-rail="gallery" class="group flex items-center gap-3 text-xs font-mono text-slate-500 hover:text-[#38BDF8] transition-colors">
+      <span class="rail-dot h-2 w-2 rounded-full bg-slate-600 transition-all group-hover:bg-[#38BDF8]"></span>
+      <span>Gallery</span>
+    </a>
+    <a href="#contact" data-rail="contact" class="group flex items-center gap-3 text-xs font-mono text-slate-500 hover:text-[#38BDF8] transition-colors">
+      <span class="rail-dot h-2 w-2 rounded-full bg-slate-600 transition-all group-hover:bg-[#38BDF8]"></span>
+      <span>Contact</span>
+    </a>
+  </aside>
+
+  <main>
+    <!-- Hero -->
+    <section id="home" class="relative min-h-screen flex items-center overflow-hidden pt-24 pb-16">
+      <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+        <img
+          id="parallax-portrait"
+          src="assets/ryan-decena.png"
+          alt=""
+          class="hero-portrait absolute inset-y-0 right-0 h-full w-full object-cover object-[center_18%] opacity-40 sm:opacity-50 lg:w-[58%] lg:opacity-90 lg:object-[center_12%]"
+        />
+        <div class="absolute inset-0 bg-gradient-to-r from-[#0F172A] via-[#0F172A]/92 to-[#0F172A]/25 lg:via-[#0F172A]/75 lg:to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-[#0F172A]/70"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-[#38BDF8]/10 via-transparent to-[#10B981]/10"></div>
+        <div id="parallax-orb-1" class="absolute top-1/4 right-1/4 h-64 w-64 rounded-full bg-[#38BDF8]/10 blur-3xl"></div>
+        <div id="parallax-orb-2" class="absolute bottom-1/4 right-1/3 h-48 w-48 rounded-full bg-[#10B981]/10 blur-3xl"></div>
+      </div>
+
+      <div class="relative z-10 mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div class="max-w-xl">
+          <p class="animate-fade-up font-mono text-sm text-[#10B981] mb-3 tracking-wide">// scroll the story</p>
+          <h1 class="animate-fade-up delay-1 text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-none tracking-tight mb-4 drop-shadow-[0_4px_24px_rgba(15,23,42,0.8)]">
+            Ryan Decena
+          </h1>
+          <p class="animate-fade-up delay-1 text-lg sm:text-xl font-medium text-[#38BDF8] mb-5 tracking-wide">
+            Web · GHL · Social Media
+          </p>
+          <p class="animate-fade-up delay-2 text-base sm:text-lg text-slate-300/90 leading-relaxed mb-8">
+            I build fast websites, run GoHighLevel systems that convert, and grow brands through social content — one operator across the full digital stack.
+          </p>
+          <div class="animate-fade-up delay-3 flex flex-wrap gap-4">
+            <a href="#hook" class="inline-flex items-center gap-2 rounded-lg bg-[#38BDF8] px-6 py-3 text-sm font-semibold text-slate-950 hover:bg-[#7dd3fc] hover:shadow-cyan-glow transition-all">
+              <i data-lucide="chevrons-down" class="w-4 h-4"></i>
+              Scroll the Story
+            </a>
+            <a href="#contact" class="inline-flex items-center gap-2 rounded-lg border border-slate-500/80 bg-slate-950/40 backdrop-blur-sm px-6 py-3 text-sm font-semibold text-slate-200 hover:border-[#10B981] hover:text-[#10B981] hover:shadow-emerald-glow transition-all">
+              <i data-lucide="mail" class="w-4 h-4"></i>
+              Contact Me
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hook -->
+    <section id="hook" class="relative px-4 sm:px-6 lg:px-8 py-24 border-t border-slate-800/60">
+      <div class="mx-auto max-w-3xl text-center story-block">
+        <p class="font-mono text-sm text-[#10B981] mb-4">// the system</p>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
+          Website. CRM. Social.
+          <span class="block text-[#38BDF8]">One continuous pipeline.</span>
+        </h2>
+        <p class="text-lg text-slate-400 leading-relaxed">
+          Most brands split these across three vendors. I connect them — so leads from a landing page land in GHL, get nurtured, and show up again as content that converts.
+        </p>
+        <div class="mt-12 flex flex-wrap justify-center gap-3 sm:gap-6 font-mono text-sm">
+          <a href="#web" class="rounded-full border border-slate-700 bg-slate-900/60 px-5 py-2.5 text-[#38BDF8] hover:border-[#38BDF8] hover:shadow-cyan-glow transition-all">01 Web</a>
+          <span class="hidden sm:inline self-center text-slate-600">→</span>
+          <a href="#ghl" class="rounded-full border border-slate-700 bg-slate-900/60 px-5 py-2.5 text-[#10B981] hover:border-[#10B981] hover:shadow-emerald-glow transition-all">02 GHL</a>
+          <span class="hidden sm:inline self-center text-slate-600">→</span>
+          <a href="#social" class="rounded-full border border-slate-700 bg-slate-900/60 px-5 py-2.5 text-[#38BDF8] hover:border-[#38BDF8] hover:shadow-cyan-glow transition-all">03 Social</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sticky Scroll Story (Web · GHL · Social) — 21st.dev style -->
+    <section id="story" class="sticky-scroll border-t border-slate-800/60">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16 lg:py-8">
+        <div class="lg:grid lg:grid-cols-2 lg:gap-14 xl:gap-20 items-start">
+          <!-- Left: scrolling chapters -->
+          <div class="relative">
+            <div class="absolute left-0 top-8 bottom-8 hidden sm:block w-px bg-slate-800" aria-hidden="true">
+              <div id="story-beam" class="beam-line absolute inset-x-0 top-0 h-full w-full"></div>
+            </div>
+
+            <article id="web" class="sticky-card relative sm:pl-8 min-h-[70vh] lg:min-h-[85vh] flex flex-col justify-center py-12" data-sticky-index="0">
+              <span class="chapter-accent absolute left-0 top-16 bottom-16 hidden sm:block w-0.5 rounded-full bg-gradient-to-b from-[#38BDF8] to-transparent"></span>
+              <p class="font-mono text-sm text-[#38BDF8] mb-3">01 — Web Development</p>
+              <h2 class="text-3xl sm:text-4xl font-bold text-white leading-tight mb-5">
+                Sites that load fast and look ready to sell.
+              </h2>
+              <p class="text-slate-400 leading-relaxed mb-6 max-w-xl">
+                From WordPress + Elementor builds to React / Tailwind interfaces — clean structure, mobile-first layouts, and PageSpeed targets that hit 100% through caching, minification, and smart assets.
+              </p>
+              <div class="flex flex-wrap gap-2.5 mb-8">
+                <span class="badge-neon rounded-full border border-slate-600 bg-slate-800/60 px-3.5 py-1.5 text-xs font-medium text-slate-300">WordPress</span>
+                <span class="badge-neon rounded-full border border-slate-600 bg-slate-800/60 px-3.5 py-1.5 text-xs font-medium text-slate-300">Elementor</span>
+                <span class="badge-neon rounded-full border border-slate-600 bg-slate-800/60 px-3.5 py-1.5 text-xs font-medium text-slate-300">React</span>
+                <span class="badge-neon rounded-full border border-slate-600 bg-slate-800/60 px-3.5 py-1.5 text-xs font-medium text-slate-300">Vue.js</span>
+                <span class="badge-neon rounded-full border border-slate-600 bg-slate-800/60 px-3.5 py-1.5 text-xs font-medium text-slate-300">Tailwind CSS</span>
+                <span class="badge-neon rounded-full border border-slate-600 bg-slate-800/60 px-3.5 py-1.5 text-xs font-medium text-slate-300">Cursor AI</span>
+                <span class="badge-neon rounded-full border border-slate-600 bg-slate-800/60 px-3.5 py-1.5 text-xs font-medium text-slate-300">Technical SEO</span>
+              </div>
+              <a href="#gallery" data-open-filter="web" class="gallery-jump inline-flex items-center gap-2 text-sm font-semibold text-[#38BDF8] hover:text-[#7dd3fc] transition-colors">
+                See web work in Gallery
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </a>
+            </article>
+
+            <article id="ghl" class="sticky-card relative sm:pl-8 min-h-[70vh] lg:min-h-[85vh] flex flex-col justify-center py-12" data-sticky-index="1">
+              <span class="chapter-accent absolute left-0 top-16 bottom-16 hidden sm:block w-0.5 rounded-full bg-gradient-to-b from-[#10B981] to-transparent"></span>
+              <p class="font-mono text-sm text-[#10B981] mb-3">02 — GoHighLevel</p>
+              <h2 class="text-3xl sm:text-4xl font-bold text-white leading-tight mb-5">
+                Digital ops that turn traffic into pipeline.
+              </h2>
+              <p class="text-slate-400 leading-relaxed mb-6 max-w-xl">
+                As a Digital Operations &amp; Marketing Specialist for international clients, I manage CRM architecture, WordPress service pages, and brand-aligned assets — so marketing and operations share one source of truth.
+              </p>
+              <div class="flex flex-wrap gap-2.5 mb-8">
+                <span class="badge-neon badge-neon-emerald rounded-full border border-slate-600 bg-slate-800/60 px-3.5 py-1.5 text-xs font-medium text-slate-300">GoHighLevel</span>
+                <span class="badge-neon badge-neon-emerald rounded-full border border-slate-600 bg-slate-800/60 px-3.5 py-1.5 text-xs font-medium text-slate-300">Lead Connector</span>
+                <span class="badge-neon badge-neon-emerald rounded-full border border-slate-600 bg-slate-800/60 px-3.5 py-1.5 text-xs font-medium text-slate-300">Workflows</span>
+                <span class="badge-neon badge-neon-emerald rounded-full border border-slate-600 bg-slate-800/60 px-3.5 py-1.5 text-xs font-medium text-slate-300">Pipelines</span>
+                <span class="badge-neon badge-neon-emerald rounded-full border border-slate-600 bg-slate-800/60 px-3.5 py-1.5 text-xs font-medium text-slate-300">A2P</span>
+                <span class="badge-neon badge-neon-emerald rounded-full border border-slate-600 bg-slate-800/60 px-3.5 py-1.5 text-xs font-medium text-slate-300">WordPress SEO</span>
+              </div>
+              <a href="#experience" class="inline-flex items-center gap-2 text-sm font-semibold text-[#10B981] hover:text-[#34d399] transition-colors">
+                See digital ops experience
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </a>
+            </article>
+
+            <article id="social" class="sticky-card relative sm:pl-8 min-h-[70vh] lg:min-h-[85vh] flex flex-col justify-center py-12" data-sticky-index="2">
+              <span class="chapter-accent absolute left-0 top-16 bottom-16 hidden sm:block w-0.5 rounded-full bg-gradient-to-b from-[#38BDF8] to-transparent"></span>
+              <p class="font-mono text-sm text-[#38BDF8] mb-3">03 — Social Media Manager</p>
+              <h2 class="text-3xl sm:text-4xl font-bold text-white leading-tight mb-5">
+                Content, streams, and creative that keep brands present.
+              </h2>
+              <p class="text-slate-400 leading-relaxed mb-6 max-w-xl">
+                Since 2018 I’ve led digital production for ministry and brand work — video editing, live streaming, motion graphics, and social assets that match the voice of each audience.
+              </p>
+              <div class="flex flex-wrap gap-2.5 mb-8">
+                <span class="badge-neon rounded-full border border-slate-600 bg-slate-800/60 px-3.5 py-1.5 text-xs font-medium text-slate-300">Premiere Pro</span>
+                <span class="badge-neon rounded-full border border-slate-600 bg-slate-800/60 px-3.5 py-1.5 text-xs font-medium text-slate-300">After Effects</span>
+                <span class="badge-neon rounded-full border border-slate-600 bg-slate-800/60 px-3.5 py-1.5 text-xs font-medium text-slate-300">CapCut</span>
+                <span class="badge-neon rounded-full border border-slate-600 bg-slate-800/60 px-3.5 py-1.5 text-xs font-medium text-slate-300">Canva</span>
+                <span class="badge-neon rounded-full border border-slate-600 bg-slate-800/60 px-3.5 py-1.5 text-xs font-medium text-slate-300">OBS Studio</span>
+                <span class="badge-neon rounded-full border border-slate-600 bg-slate-800/60 px-3.5 py-1.5 text-xs font-medium text-slate-300">Live Streaming</span>
+              </div>
+              <div class="flex flex-wrap gap-4">
+                <a href="#gallery" data-open-filter="graphic" class="gallery-jump inline-flex items-center gap-2 text-sm font-semibold text-[#38BDF8] hover:text-[#7dd3fc] transition-colors">
+                  Brand kit gallery
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+                <a href="#gallery" data-open-filter="video" class="gallery-jump inline-flex items-center gap-2 text-sm font-semibold text-[#10B981] hover:text-[#34d399] transition-colors">
+                  Video gallery
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <!-- Right: sticky visual panel (desktop) -->
+          <div class="hidden lg:block sticky top-28 h-[calc(100vh-8rem)] py-8">
+            <div class="relative h-full rounded-2xl border border-slate-700/70 bg-slate-900/40 overflow-hidden backdrop-blur-sm">
+              <div class="absolute inset-0 bg-gradient-to-br from-[#38BDF8]/5 via-transparent to-[#10B981]/5 pointer-events-none"></div>
+
+              <div class="sticky-visual is-active p-6 sm:p-8 flex flex-col justify-center h-full" data-visual="0">
+                <div class="mock-browser rounded-xl overflow-hidden border border-slate-700/80 bg-slate-950/80">
+                  <div class="flex items-center gap-2 border-b border-slate-800 px-4 py-3">
+                    <span class="h-2.5 w-2.5 rounded-full bg-red-500/70"></span>
+                    <span class="h-2.5 w-2.5 rounded-full bg-yellow-500/70"></span>
+                    <span class="h-2.5 w-2.5 rounded-full bg-green-500/70"></span>
+                    <span class="ml-3 font-mono text-[10px] text-slate-500 truncate">ryandecena.dev — optimized</span>
+                  </div>
+                  <div class="space-y-3 p-5">
+                    <div class="rounded-lg border border-[#38BDF8]/35 bg-gradient-to-br from-[#38BDF8]/10 to-transparent p-5">
+                      <p class="font-mono text-5xl font-bold text-[#38BDF8] drop-shadow-[0_0_20px_rgba(56,189,248,0.35)]">100%</p>
+                      <p class="mt-2 text-sm text-slate-400">PageSpeed Insights target</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                      <div class="rounded-lg border border-slate-700/70 bg-slate-900/60 p-4">
+                        <i data-lucide="layout-template" class="w-5 h-5 text-[#38BDF8] mb-2"></i>
+                        <p class="text-xs font-semibold text-white">Landing pages</p>
+                        <p class="text-[11px] text-slate-500 mt-1">GHL forms + pixels</p>
+                      </div>
+                      <div class="rounded-lg border border-slate-700/70 bg-slate-900/60 p-4">
+                        <i data-lucide="zap" class="w-5 h-5 text-[#38BDF8] mb-2"></i>
+                        <p class="text-xs font-semibold text-white">AI delivery</p>
+                        <p class="text-[11px] text-slate-500 mt-1">Cursor + Tailwind</p>
+                      </div>
+                    </div>
+                    <div class="flex items-center gap-2 rounded-lg border border-slate-700/50 bg-slate-900/40 px-3 py-2">
+                      <span class="h-1.5 flex-1 rounded-full bg-slate-800 overflow-hidden">
+                        <span class="block h-full w-[100%] rounded-full bg-gradient-to-r from-[#38BDF8] to-[#10B981]"></span>
+                      </span>
+                      <span class="font-mono text-[10px] text-[#10B981]">CWV pass</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sticky-visual p-6 sm:p-8 flex flex-col justify-center h-full" data-visual="1">
+                <div class="space-y-3">
+                  <p class="font-mono text-[11px] uppercase tracking-wider text-[#10B981] mb-1">Lead funnel</p>
+                  <div class="funnel-step rounded-xl border border-[#10B981]/40 bg-gradient-to-r from-[#10B981]/15 to-transparent p-4 flex items-center gap-3">
+                    <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#10B981]/15 text-[#10B981]">
+                      <i data-lucide="globe" class="w-5 h-5"></i>
+                    </span>
+                    <div>
+                      <p class="text-sm font-semibold text-white">Website traffic</p>
+                      <p class="text-xs text-slate-400">Landing page + SEO</p>
+                    </div>
+                  </div>
+                  <div class="flex justify-center text-[#10B981]/60">
+                    <i data-lucide="chevrons-down" class="w-4 h-4"></i>
+                  </div>
+                  <div class="funnel-step rounded-xl border border-[#10B981]/30 bg-slate-950/60 p-4 flex items-center gap-3">
+                    <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#10B981]/10 text-[#10B981]">
+                      <i data-lucide="workflow" class="w-5 h-5"></i>
+                    </span>
+                    <div>
+                      <p class="text-sm font-semibold text-white">GHL pipelines</p>
+                      <p class="text-xs text-slate-400">Workflows · A2P · Lead Connector</p>
+                    </div>
+                  </div>
+                  <div class="flex justify-center text-[#10B981]/60">
+                    <i data-lucide="chevrons-down" class="w-4 h-4"></i>
+                  </div>
+                  <div class="funnel-step rounded-xl border border-[#38BDF8]/30 bg-slate-950/60 p-4 flex items-center gap-3">
+                    <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#38BDF8]/10 text-[#38BDF8]">
+                      <i data-lucide="badge-check" class="w-5 h-5"></i>
+                    </span>
+                    <div>
+                      <p class="text-sm font-semibold text-white">Booked / converted</p>
+                      <p class="text-xs text-slate-400">Nurture → close</p>
+                    </div>
+                  </div>
+                  <div class="funnel-step mt-2 rounded-xl border border-slate-700/70 bg-slate-950/40 p-4">
+                    <div class="flex items-center gap-3">
+                      <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#10B981]/10 text-[#10B981]">
+                        <i data-lucide="shield" class="w-4 h-4"></i>
+                      </span>
+                      <p class="text-xs text-slate-400">Security audits &amp; permissions as teams scale</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sticky-visual p-6 sm:p-8 flex flex-col justify-center h-full" data-visual="2">
+                <div class="space-y-4">
+                  <div class="rounded-xl border border-[#38BDF8]/35 bg-gradient-to-br from-[#38BDF8]/10 to-transparent p-6">
+                    <p class="font-mono text-5xl font-bold text-[#38BDF8] drop-shadow-[0_0_20px_rgba(56,189,248,0.35)]">2018+</p>
+                    <p class="mt-2 text-sm text-slate-400">Years leading social, video &amp; AV production</p>
+                  </div>
+                  <div class="rounded-xl border border-slate-700/70 bg-slate-950/50 p-5">
+                    <div class="flex items-center gap-3 mb-2">
+                      <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-[#10B981]/10 text-[#10B981]">
+                        <i data-lucide="video" class="w-5 h-5"></i>
+                      </span>
+                      <h3 class="font-semibold text-white">Church Ministry</h3>
+                    </div>
+                    <p class="text-sm text-slate-400">Live streams, edits, motion graphics, and weekly technical AV setups.</p>
+                  </div>
+                  <div class="rounded-xl border border-slate-700/70 bg-slate-950/50 p-5">
+                    <div class="flex items-center gap-3 mb-2">
+                      <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-[#38BDF8]/10 text-[#38BDF8]">
+                        <i data-lucide="megaphone" class="w-5 h-5"></i>
+                      </span>
+                      <h3 class="font-semibold text-white">Brand social</h3>
+                    </div>
+                    <p class="text-sm text-slate-400">On-brand assets and presence across clients and campaigns.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slim Experience trail -->
+    <section id="experience" class="px-4 sm:px-6 lg:px-8 py-24 border-t border-slate-800/60">
+      <div class="mx-auto max-w-6xl">
+        <div class="mb-10 story-block">
+          <p class="font-mono text-sm text-[#10B981] mb-3">// trail</p>
+          <h2 class="text-2xl sm:text-3xl font-bold text-white mb-3">Experience that backs the story</h2>
+          <p class="text-slate-400 max-w-2xl">Roles focused on web, GHL, and social — plus a compact engineering background.</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-5">
+          <article class="story-block rounded-xl border border-slate-700/70 bg-slate-900/40 p-6 hover:border-[#38BDF8]/40 transition-colors">
+            <div class="flex justify-between gap-3 mb-2">
+              <h3 class="font-semibold text-white">Part-Time Web Designer &amp; Developer</h3>
+              <p class="font-mono text-xs text-slate-500 shrink-0">2023 – Present</p>
+            </div>
+            <p class="text-sm text-[#38BDF8] mb-3">Freelance / Independent</p>
+            <p class="text-sm text-slate-400">HTML/CSS/JS/PHP/React/Vue sites, Tailwind &amp; Bootstrap, Cursor AI, Cloudflare, 100% PageSpeed builds.</p>
+          </article>
+          <article class="story-block delay-a rounded-xl border border-slate-700/70 bg-slate-900/40 p-6 hover:border-[#10B981]/40 transition-colors">
+            <div class="flex justify-between gap-3 mb-2">
+              <h3 class="font-semibold text-white">Digital Operations &amp; Marketing Specialist</h3>
+              <p class="font-mono text-xs text-slate-500 shrink-0">2024 – 2026</p>
+            </div>
+            <p class="text-sm text-[#38BDF8] mb-3">Freelance (International Clients)</p>
+            <p class="text-sm text-slate-400">GoHighLevel CRM, security audits, WordPress SEO, brand assets across multiple sectors.</p>
+          </article>
+          <article class="story-block rounded-xl border border-slate-700/70 bg-slate-900/40 p-6 hover:border-[#38BDF8]/40 transition-colors">
+            <div class="flex justify-between gap-3 mb-2">
+              <h3 class="font-semibold text-white">WordPress Developer &amp; SEO Specialist</h3>
+              <p class="font-mono text-xs text-slate-500 shrink-0">2024 – 2026</p>
+            </div>
+            <p class="text-sm text-[#38BDF8] mb-3">Freelance (Consultant)</p>
+            <p class="text-sm text-slate-400">Elementor sites, On-Page SEO, and custom marketing creatives aligned to client brands.</p>
+          </article>
+          <article class="story-block delay-a rounded-xl border border-slate-700/70 bg-slate-900/40 p-6 hover:border-[#10B981]/40 transition-colors">
+            <div class="flex justify-between gap-3 mb-2">
+              <h3 class="font-semibold text-white">Social Media Manager &amp; Technical Lead</h3>
+              <p class="font-mono text-xs text-slate-500 shrink-0">2018 – Present</p>
+            </div>
+            <p class="text-sm text-[#38BDF8] mb-3">Church Ministry</p>
+            <p class="text-sm text-slate-400">Video editing, live streaming, motion graphics, and technical AV production.</p>
+          </article>
+        </div>
+        <div class="story-block delay-b mt-5 rounded-xl border border-dashed border-slate-700/80 bg-slate-900/30 p-6">
+          <p class="text-xs font-mono uppercase tracking-wider text-slate-500 mb-2">Also brings</p>
+          <p class="text-sm text-slate-400">
+            <span class="text-white font-medium">QA Automation background</span> — Sun Life (Playwright/Cypress/LRE) and Globe Telecom (Selenium/Robot Framework). Useful when your web or CRM flows need test discipline, not just design.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Proof: Gallery -->
+    <section id="gallery" class="relative px-4 sm:px-6 lg:px-8 py-24 border-t border-slate-800/60 overflow-hidden">
+      <div class="pointer-events-none absolute inset-0 contact-glow" aria-hidden="true"></div>
+      <div class="relative mx-auto max-w-6xl">
+        <div class="mb-8 story-block">
+          <p class="font-mono text-sm text-[#10B981] mb-3">// proof</p>
+          <h2 class="text-3xl sm:text-4xl font-bold text-white mb-3">
+            Work that
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#38BDF8] to-[#10B981]">shows the story</span>
+          </h2>
+          <p class="text-slate-400 max-w-2xl">Web first (desktop + mobile), then video, then brand kits under Graphic.</p>
+        </div>
+
+        <div class="sticky top-[4.5rem] z-20 -mx-1 mb-8 rounded-xl border border-slate-800/80 bg-slate-950/85 px-3 py-3 backdrop-blur-md story-block delay-a" role="tablist" aria-label="Gallery categories">
+          <div class="flex flex-wrap gap-2">
+            <button type="button" data-filter="all" class="gallery-filter rounded-lg border border-slate-600 px-4 py-2 text-sm font-medium text-slate-300 transition-all hover:border-[#38BDF8]">All</button>
+            <button type="button" data-filter="web" class="gallery-filter active rounded-lg border border-slate-600 px-4 py-2 text-sm font-medium text-slate-300 transition-all hover:border-[#38BDF8]">Web</button>
+            <button type="button" data-filter="video" class="gallery-filter rounded-lg border border-slate-600 px-4 py-2 text-sm font-medium text-slate-300 transition-all hover:border-[#38BDF8]">Video</button>
+            <button type="button" data-filter="graphic" class="gallery-filter rounded-lg border border-slate-600 px-4 py-2 text-sm font-medium text-slate-300 transition-all hover:border-[#38BDF8]">Graphic</button>
+          </div>
+        </div>
+
+        <div id="gallery-grid" class="space-y-10">
+          <!-- WEB: 3 desktop + 3 mobile -->
+          <div class="gallery-group" data-group="web">
+            <div class="mb-4 flex items-end justify-between gap-3">
+              <div>
+                <p class="font-mono text-xs uppercase tracking-wider text-[#38BDF8]">Web · Desktop</p>
+                <p class="text-sm text-slate-400">3 live websites — click to open</p>
+              </div>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              <button type="button" class="gallery-item group text-left" data-category="web" data-title="The Recap Group" data-type="image" data-src="assets/gallery/web/recap-group.jpg" data-url="https://therecapgroup.com/">
+                <div class="relative overflow-hidden rounded-xl border border-slate-700/70 bg-slate-900/50 aspect-[16/10] transition-all group-hover:border-[#38BDF8]/60 group-hover:-translate-y-1">
+                  <img src="assets/gallery/web/recap-group.jpg" alt="The Recap Group" class="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]" />
+                  <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/85 to-transparent p-4 pt-12">
+                    <span class="text-[10px] font-mono uppercase tracking-wider text-[#38BDF8]">Desktop</span>
+                    <p class="text-sm font-semibold text-white mt-0.5">The Recap Group</p>
+                  </div>
+                </div>
+              </button>
+              <button type="button" class="gallery-item group text-left" data-category="web" data-title="BC Traffic Coating" data-type="image" data-src="assets/gallery/web/bc-traffic.jpg" data-url="https://bctrafficcoating.com/">
+                <div class="relative overflow-hidden rounded-xl border border-slate-700/70 bg-slate-900/50 aspect-[16/10] transition-all group-hover:border-[#38BDF8]/60 group-hover:-translate-y-1">
+                  <img src="assets/gallery/web/bc-traffic.jpg" alt="BC Traffic Coating" class="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]" />
+                  <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/85 to-transparent p-4 pt-12">
+                    <span class="text-[10px] font-mono uppercase tracking-wider text-[#38BDF8]">Desktop</span>
+                    <p class="text-sm font-semibold text-white mt-0.5">BC Traffic Coating</p>
+                  </div>
+                </div>
+              </button>
+              <button type="button" class="gallery-item group text-left" data-category="web" data-title="All Florida CPTED" data-type="image" data-src="assets/gallery/web/all-florida.jpg" data-url="https://all-florida-cpte-dwebsite.vercel.app/">
+                <div class="relative overflow-hidden rounded-xl border border-slate-700/70 bg-slate-900/50 aspect-[16/10] transition-all group-hover:border-[#38BDF8]/60 group-hover:-translate-y-1">
+                  <img src="assets/gallery/web/all-florida.jpg" alt="All Florida CPTED" class="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]" />
+                  <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/85 to-transparent p-4 pt-12">
+                    <span class="text-[10px] font-mono uppercase tracking-wider text-[#38BDF8]">Desktop</span>
+                    <p class="text-sm font-semibold text-white mt-0.5">All Florida CPTED</p>
+                  </div>
+                </div>
+              </button>
+            </div>
+
+            <div class="mt-8 mb-4">
+              <p class="font-mono text-xs uppercase tracking-wider text-[#10B981]">Web · Mobile</p>
+              <p class="text-sm text-slate-400">3 mobile views — click to open</p>
+            </div>
+            <div class="grid grid-cols-3 gap-4 sm:gap-5">
+              <button type="button" class="gallery-item group text-left" data-category="web" data-title="Suwanee Bell Farms" data-type="image" data-src="assets/gallery/web/mushroom-mobile.jpg" data-url="https://mushroom-website-001.vercel.app/">
+                <div class="relative mx-auto w-full max-w-[280px] overflow-hidden rounded-[1.75rem] border-[3px] border-slate-600 bg-slate-950 aspect-[9/19] shadow-xl transition-all group-hover:border-[#10B981] group-hover:-translate-y-1">
+                  <img src="assets/gallery/web/mushroom-mobile.jpg" alt="Suwanee Bell Farms mobile" class="h-full w-full object-cover object-top" />
+                  <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent p-3.5 pt-12">
+                    <span class="text-[10px] font-mono uppercase tracking-wider text-[#10B981]">Mobile</span>
+                    <p class="text-sm font-semibold text-white mt-0.5 leading-tight">Suwanee Bell Farms</p>
+                  </div>
+                </div>
+              </button>
+              <button type="button" class="gallery-item group text-left" data-category="web" data-title="Duphore Pool Repair" data-type="image" data-src="assets/gallery/web/duphore-pool-mobile.jpg" data-url="https://pool-service-003.vercel.app/">
+                <div class="relative mx-auto w-full max-w-[280px] overflow-hidden rounded-[1.75rem] border-[3px] border-slate-600 bg-slate-950 aspect-[9/19] shadow-xl transition-all group-hover:border-[#38BDF8] group-hover:-translate-y-1">
+                  <img src="assets/gallery/web/duphore-pool-mobile.jpg" alt="Duphore Pool mobile" class="h-full w-full object-cover object-top" />
+                  <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent p-3.5 pt-12">
+                    <span class="text-[10px] font-mono uppercase tracking-wider text-[#38BDF8]">Mobile</span>
+                    <p class="text-sm font-semibold text-white mt-0.5 leading-tight">Duphore Pool Repair</p>
+                  </div>
+                </div>
+              </button>
+              <button type="button" class="gallery-item group text-left" data-category="web" data-title="Garden Pool" data-type="image" data-src="assets/gallery/web/garden-pool-mobile.jpg" data-url="https://gardenpool-001.vercel.app/">
+                <div class="relative mx-auto w-full max-w-[280px] overflow-hidden rounded-[1.75rem] border-[3px] border-slate-600 bg-slate-950 aspect-[9/19] shadow-xl transition-all group-hover:border-[#10B981] group-hover:-translate-y-1">
+                  <img src="assets/gallery/web/garden-pool-mobile.jpg" alt="Garden Pool mobile" class="h-full w-full object-cover object-top" />
+                  <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent p-3.5 pt-12">
+                    <span class="text-[10px] font-mono uppercase tracking-wider text-[#10B981]">Mobile</span>
+                    <p class="text-sm font-semibold text-white mt-0.5 leading-tight">Garden Pool</p>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <!-- VIDEO: 3 landscape + 3 portrait -->
+          <div class="gallery-group" data-group="video">
+            <div class="mb-4">
+              <p class="font-mono text-xs uppercase tracking-wider text-[#10B981]">Video · Landscape</p>
+              <p class="text-sm text-slate-400">Add files to <span class="font-mono text-[11px] text-[#38BDF8]">assets/gallery/video/</span></p>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              <button type="button" class="gallery-item group text-left" data-category="video" data-title="Landscape Video 1" data-type="video" data-src="assets/gallery/video/landscape-1.mp4" data-poster="assets/gallery/video/landscape-1.jpg">
+                <div class="relative overflow-hidden rounded-xl border border-slate-700/70 bg-slate-900/50 aspect-video transition-all group-hover:border-[#10B981]/60 group-hover:-translate-y-1">
+                  <img src="assets/gallery/video/landscape-1.jpg" alt="" class="gallery-thumb absolute inset-0 h-full w-full object-cover opacity-0" onload="this.classList.add('opacity-100'); this.nextElementSibling.classList.add('hidden');" />
+                  <div class="gallery-placeholder absolute inset-0 flex flex-col items-center justify-center gap-2 bg-gradient-to-br from-slate-900 to-slate-800">
+                    <i data-lucide="play-circle" class="w-8 h-8 text-[#10B981]/70"></i>
+                    <p class="text-sm text-slate-300">Landscape 1</p>
+                    <p class="text-[10px] font-mono text-slate-500">landscape-1.mp4</p>
+                  </div>
+                  <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <span class="flex h-11 w-11 items-center justify-center rounded-full bg-slate-950/70 border border-[#10B981]/40 text-[#10B981]"><i data-lucide="play" class="w-4 h-4 ml-0.5"></i></span>
+                  </div>
+                </div>
+              </button>
+              <button type="button" class="gallery-item group text-left" data-category="video" data-title="Landscape Video 2" data-type="video" data-src="assets/gallery/video/landscape-2.mp4" data-poster="assets/gallery/video/landscape-2.jpg">
+                <div class="relative overflow-hidden rounded-xl border border-slate-700/70 bg-slate-900/50 aspect-video transition-all group-hover:border-[#10B981]/60 group-hover:-translate-y-1">
+                  <img src="assets/gallery/video/landscape-2.jpg" alt="" class="gallery-thumb absolute inset-0 h-full w-full object-cover opacity-0" onload="this.classList.add('opacity-100'); this.nextElementSibling.classList.add('hidden');" />
+                  <div class="gallery-placeholder absolute inset-0 flex flex-col items-center justify-center gap-2 bg-gradient-to-br from-slate-900 to-slate-800">
+                    <i data-lucide="play-circle" class="w-8 h-8 text-[#10B981]/70"></i>
+                    <p class="text-sm text-slate-300">Landscape 2</p>
+                    <p class="text-[10px] font-mono text-slate-500">landscape-2.mp4</p>
+                  </div>
+                  <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <span class="flex h-11 w-11 items-center justify-center rounded-full bg-slate-950/70 border border-[#10B981]/40 text-[#10B981]"><i data-lucide="play" class="w-4 h-4 ml-0.5"></i></span>
+                  </div>
+                </div>
+              </button>
+              <button type="button" class="gallery-item group text-left" data-category="video" data-title="Landscape Video 3" data-type="video" data-src="assets/gallery/video/landscape-3.mp4" data-poster="assets/gallery/video/landscape-3.jpg">
+                <div class="relative overflow-hidden rounded-xl border border-slate-700/70 bg-slate-900/50 aspect-video transition-all group-hover:border-[#10B981]/60 group-hover:-translate-y-1">
+                  <img src="assets/gallery/video/landscape-3.jpg" alt="" class="gallery-thumb absolute inset-0 h-full w-full object-cover opacity-0" onload="this.classList.add('opacity-100'); this.nextElementSibling.classList.add('hidden');" />
+                  <div class="gallery-placeholder absolute inset-0 flex flex-col items-center justify-center gap-2 bg-gradient-to-br from-slate-900 to-slate-800">
+                    <i data-lucide="play-circle" class="w-8 h-8 text-[#10B981]/70"></i>
+                    <p class="text-sm text-slate-300">Landscape 3</p>
+                    <p class="text-[10px] font-mono text-slate-500">landscape-3.mp4</p>
+                  </div>
+                  <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <span class="flex h-11 w-11 items-center justify-center rounded-full bg-slate-950/70 border border-[#10B981]/40 text-[#10B981]"><i data-lucide="play" class="w-4 h-4 ml-0.5"></i></span>
+                  </div>
+                </div>
+              </button>
+            </div>
+
+            <div class="mt-8 mb-4">
+              <p class="font-mono text-xs uppercase tracking-wider text-[#38BDF8]">Video · Portrait</p>
+              <p class="text-sm text-slate-400">YouTube Shorts &amp; Facebook Reels</p>
+            </div>
+            <div class="grid grid-cols-3 gap-4 sm:gap-5">
+              <button type="button" class="gallery-item group text-left" data-category="video" data-title="The Impossibilities Expert" data-type="embed" data-src="https://www.youtube.com/embed/52NVaOIZe3o?autoplay=1&rel=0" data-url="https://youtube.com/shorts/52NVaOIZe3o" data-link-label="Watch on YouTube">
+                <div class="relative mx-auto w-full max-w-[280px] overflow-hidden rounded-xl border border-slate-700/70 bg-slate-900/50 aspect-[9/16] transition-all group-hover:border-[#38BDF8]/60 group-hover:-translate-y-1">
+                  <img src="assets/gallery/video/portrait-1.jpg" alt="The Impossibilities Expert" class="absolute inset-0 h-full w-full object-cover" />
+                  <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent p-3.5 pt-12">
+                    <span class="text-[10px] font-mono uppercase tracking-wider text-[#38BDF8]">YouTube Short</span>
+                    <p class="text-sm font-semibold text-white mt-0.5 leading-tight">The Impossibilities Expert</p>
+                  </div>
+                  <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <span class="flex h-12 w-12 items-center justify-center rounded-full bg-slate-950/70 border border-[#38BDF8]/40 text-[#38BDF8]"><i data-lucide="play" class="w-5 h-5 ml-0.5"></i></span>
+                  </div>
+                </div>
+              </button>
+              <button type="button" class="gallery-item group text-left" data-category="video" data-title="CCGM Facebook Reel" data-type="embed" data-src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F3592950600857866&show_text=false&width=360" data-url="https://www.facebook.com/reel/3592950600857866" data-link-label="Watch on Facebook">
+                <div class="relative mx-auto w-full max-w-[280px] overflow-hidden rounded-xl border border-slate-700/70 bg-slate-900/50 aspect-[9/16] transition-all group-hover:border-[#10B981]/60 group-hover:-translate-y-1">
+                  <div class="absolute inset-0 bg-gradient-to-br from-[#1877F2]/25 via-slate-900 to-slate-950"></div>
+                  <div class="absolute inset-0 flex flex-col items-center justify-center gap-4 p-4 text-center">
+                    <span class="flex h-14 w-14 items-center justify-center rounded-full bg-[#1877F2] text-white shadow-lg">
+                      <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12.07C22 6.48 17.52 2 11.93 2S1.86 6.48 1.86 12.07c0 5.02 3.66 9.18 8.44 9.93v-7.03H7.9v-2.9h2.4V9.86c0-2.37 1.4-3.68 3.56-3.68 1.03 0 2.11.18 2.11.18v2.32h-1.19c-1.17 0-1.54.73-1.54 1.48v1.78h2.62l-.42 2.9h-2.2V22c4.78-.75 8.44-4.91 8.44-9.93z"/></svg>
+                    </span>
+                    <div>
+                      <p class="text-sm font-semibold text-white leading-tight">CCGM Reel</p>
+                      <p class="text-[10px] font-mono uppercase tracking-wider text-slate-400 mt-1">Facebook</p>
+                    </div>
+                    <span class="flex h-11 w-11 items-center justify-center rounded-full bg-slate-950/70 border border-[#10B981]/40 text-[#10B981]"><i data-lucide="play" class="w-4 h-4 ml-0.5"></i></span>
+                  </div>
+                  <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent p-3.5 pt-12">
+                    <span class="text-[10px] font-mono uppercase tracking-wider text-[#10B981]">Facebook Reel</span>
+                    <p class="text-sm font-semibold text-white mt-0.5 leading-tight">Ministry Reel</p>
+                  </div>
+                </div>
+              </button>
+              <button type="button" class="gallery-item group text-left" data-category="video" data-title="Canva Edit Short" data-type="embed" data-src="https://www.youtube.com/embed/Hlpv1rY1Wfs?autoplay=1&rel=0" data-url="https://youtube.com/shorts/Hlpv1rY1Wfs" data-link-label="Watch on YouTube">
+                <div class="relative mx-auto w-full max-w-[280px] overflow-hidden rounded-xl border border-slate-700/70 bg-slate-900/50 aspect-[9/16] transition-all group-hover:border-[#38BDF8]/60 group-hover:-translate-y-1">
+                  <img src="assets/gallery/video/portrait-3.jpg" alt="Canva Edit Short" class="absolute inset-0 h-full w-full object-cover" />
+                  <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent p-3.5 pt-12">
+                    <span class="text-[10px] font-mono uppercase tracking-wider text-[#38BDF8]">YouTube Short</span>
+                    <p class="text-sm font-semibold text-white mt-0.5 leading-tight">Canva Edit</p>
+                  </div>
+                  <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <span class="flex h-12 w-12 items-center justify-center rounded-full bg-slate-950/70 border border-[#38BDF8]/40 text-[#38BDF8]"><i data-lucide="play" class="w-5 h-5 ml-0.5"></i></span>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <!-- GRAPHIC: Brand Kits + Social -->
+          <div class="gallery-group" data-group="graphic">
+            <div class="mb-4">
+              <p class="font-mono text-xs uppercase tracking-wider text-[#38BDF8]">Graphic · Brand Kits</p>
+              <p class="text-sm text-slate-400">Identity systems &amp; brand boards</p>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              <button type="button" class="gallery-item group text-left" data-category="graphic" data-title="The Recap Group — Brand Kit" data-type="image" data-src="assets/gallery/brandkits/recap-group.png">
+                <div class="relative overflow-hidden rounded-xl border border-slate-700/70 bg-slate-900/50 aspect-[3/4] transition-all group-hover:border-[#38BDF8]/60 group-hover:-translate-y-1">
+                  <img src="assets/gallery/brandkits/recap-group.png" alt="The Recap Group Brand Kit" class="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]" />
+                  <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent p-4 pt-14">
+                    <span class="text-[10px] font-mono uppercase tracking-wider text-[#38BDF8]">Brand Kit</span>
+                    <p class="text-sm font-semibold text-white mt-0.5">The Recap Group</p>
+                  </div>
+                </div>
+              </button>
+              <button type="button" class="gallery-item group text-left" data-category="graphic" data-title="Suwanee Bell Farms — Brand Kit" data-type="image" data-src="assets/gallery/brandkits/suwanee-bell-farms.png">
+                <div class="relative overflow-hidden rounded-xl border border-slate-700/70 bg-slate-900/50 aspect-[3/4] transition-all group-hover:border-[#10B981]/60 group-hover:-translate-y-1">
+                  <img src="assets/gallery/brandkits/suwanee-bell-farms.png" alt="Suwanee Bell Farms Brand Kit" class="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]" />
+                  <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent p-4 pt-14">
+                    <span class="text-[10px] font-mono uppercase tracking-wider text-[#10B981]">Brand Kit</span>
+                    <p class="text-sm font-semibold text-white mt-0.5">Suwanee Bell Farms</p>
+                  </div>
+                </div>
+              </button>
+              <button type="button" class="gallery-item group text-left" data-category="graphic" data-title="Duphore Pool Repair — Brand Kit" data-type="image" data-src="assets/gallery/brandkits/duphore-pool.png">
+                <div class="relative overflow-hidden rounded-xl border border-slate-700/70 bg-slate-900/50 aspect-[3/4] transition-all group-hover:border-[#38BDF8]/60 group-hover:-translate-y-1">
+                  <img src="assets/gallery/brandkits/duphore-pool.png" alt="Duphore Pool Brand Kit" class="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]" />
+                  <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent p-4 pt-14">
+                    <span class="text-[10px] font-mono uppercase tracking-wider text-[#38BDF8]">Brand Kit</span>
+                    <p class="text-sm font-semibold text-white mt-0.5">Duphore Pool Repair</p>
+                  </div>
+                </div>
+              </button>
+            </div>
+
+            <div class="mt-8 mb-4">
+              <p class="font-mono text-xs uppercase tracking-wider text-[#10B981]">Graphic · Social</p>
+              <p class="text-sm text-slate-400">CCGM event &amp; ministry graphics</p>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              <button type="button" class="gallery-item group text-left" data-category="graphic" data-title="CCGM — Alignment is your Assignment" data-type="image" data-src="assets/gallery/graphic/ccgm-alignment.png">
+                <div class="relative overflow-hidden rounded-xl border border-slate-700/70 bg-slate-900/50 aspect-square transition-all group-hover:border-[#10B981]/60 group-hover:-translate-y-1">
+                  <img src="assets/gallery/graphic/ccgm-alignment.png" alt="CCGM Alignment is your Assignment" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                  <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent p-4 pt-14">
+                    <span class="text-[10px] font-mono uppercase tracking-wider text-[#10B981]">Social</span>
+                    <p class="text-sm font-semibold text-white mt-0.5">Alignment is your Assignment</p>
+                  </div>
+                </div>
+              </button>
+              <button type="button" class="gallery-item group text-left" data-category="graphic" data-title="CCGM — God Works Miracles" data-type="image" data-src="assets/gallery/graphic/ccgm-miracles.png">
+                <div class="relative overflow-hidden rounded-xl border border-slate-700/70 bg-slate-900/50 aspect-square transition-all group-hover:border-[#38BDF8]/60 group-hover:-translate-y-1">
+                  <img src="assets/gallery/graphic/ccgm-miracles.png" alt="CCGM God Works Miracles" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                  <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent p-4 pt-14">
+                    <span class="text-[10px] font-mono uppercase tracking-wider text-[#38BDF8]">Social</span>
+                    <p class="text-sm font-semibold text-white mt-0.5">God Works Miracles</p>
+                  </div>
+                </div>
+              </button>
+              <button type="button" class="gallery-item group text-left" data-category="graphic" data-title="CCGM — Coaching & Mentoring" data-type="image" data-src="assets/gallery/graphic/ccgm-coaching.png">
+                <div class="relative overflow-hidden rounded-xl border border-slate-700/70 bg-slate-900/50 aspect-square transition-all group-hover:border-[#10B981]/60 group-hover:-translate-y-1">
+                  <img src="assets/gallery/graphic/ccgm-coaching.png" alt="CCGM Coaching and Mentoring" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                  <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent p-4 pt-14">
+                    <span class="text-[10px] font-mono uppercase tracking-wider text-[#10B981]">Social</span>
+                    <p class="text-sm font-semibold text-white mt-0.5">Coaching &amp; Mentoring</p>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="fixed inset-0 z-[60] hidden items-center justify-center bg-slate-950/90 backdrop-blur-sm p-4" role="dialog" aria-modal="true" aria-label="Gallery preview">
+      <button type="button" id="lightbox-close" class="absolute top-4 right-4 rounded-lg border border-slate-600 p-2 text-slate-300 hover:border-[#38BDF8] hover:text-[#38BDF8] transition-colors" aria-label="Close">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+      <div class="w-full max-w-5xl">
+        <p id="lightbox-title" class="mb-3 text-center text-sm font-medium text-slate-300"></p>
+        <div class="relative overflow-hidden rounded-xl border border-slate-700 bg-slate-900">
+          <img id="lightbox-image" src="" alt="" class="hidden max-h-[82vh] w-full object-contain" />
+          <video id="lightbox-video" class="hidden max-h-[75vh] w-full" controls playsinline></video>
+          <div id="lightbox-embed-wrap" class="hidden mx-auto w-full max-w-[420px] aspect-[9/16] bg-black">
+            <iframe id="lightbox-embed" class="h-full w-full" src="" title="Video embed" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          </div>
+          <div id="lightbox-empty" class="flex min-h-[240px] flex-col items-center justify-center gap-2 p-8 text-center">
+            <i data-lucide="image-off" class="w-8 h-8 text-slate-500"></i>
+            <p class="text-sm text-slate-400">File not found yet — add your media to the matching gallery folder.</p>
+          </div>
+        </div>
+        <div class="mt-4 flex justify-center">
+          <a id="lightbox-link" href="#" target="_blank" rel="noopener noreferrer" class="hidden inline-flex items-center gap-2 rounded-lg bg-[#38BDF8] px-5 py-2.5 text-sm font-semibold text-slate-950 hover:bg-[#7dd3fc] transition-colors">
+            <i data-lucide="external-link" class="w-4 h-4"></i>
+            <span id="lightbox-link-label">Visit Live Site</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <section id="contact" class="relative px-4 sm:px-6 lg:px-8 py-28 border-t border-slate-800/60 overflow-hidden">
+      <div class="pointer-events-none absolute inset-0 contact-glow" aria-hidden="true"></div>
+      <div class="pointer-events-none absolute -right-24 bottom-0 h-72 w-72 rounded-full bg-[#10B981]/10 blur-3xl" aria-hidden="true"></div>
+      <div class="relative mx-auto max-w-6xl">
+        <div class="mb-12 story-block max-w-2xl">
+          <p class="font-mono text-sm text-[#10B981] mb-3">// next chapter</p>
+          <h2 class="text-3xl sm:text-5xl font-bold text-white leading-tight mb-4">
+            Let’s build your
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#38BDF8] to-[#10B981]">system</span>
+          </h2>
+          <p class="text-slate-400 text-lg">Web · GoHighLevel · Social — tell me what you need next.</p>
+        </div>
+        <div class="grid lg:grid-cols-2 gap-10 lg:gap-16">
+          <form id="contact-form" class="space-y-5 rounded-2xl border border-slate-700/70 bg-slate-900/40 p-6 sm:p-8 backdrop-blur-sm story-block">
+            <div class="reveal-item">
+              <label for="name" class="block text-sm font-medium text-slate-300 mb-1.5">Name</label>
+              <input type="text" id="name" name="name" required placeholder="Your name"
+                class="w-full rounded-lg border border-slate-700 bg-slate-950/60 px-4 py-3 text-sm text-white placeholder:text-slate-500 outline-none transition-all hover:border-slate-500 focus:border-[#38BDF8] focus:ring-1 focus:ring-[#38BDF8]" />
+            </div>
+            <div class="reveal-item">
+              <label for="email" class="block text-sm font-medium text-slate-300 mb-1.5">Email</label>
+              <input type="email" id="email" name="email" required placeholder="you@example.com"
+                class="w-full rounded-lg border border-slate-700 bg-slate-950/60 px-4 py-3 text-sm text-white placeholder:text-slate-500 outline-none transition-all hover:border-slate-500 focus:border-[#38BDF8] focus:ring-1 focus:ring-[#38BDF8]" />
+            </div>
+            <div class="reveal-item">
+              <label for="message" class="block text-sm font-medium text-slate-300 mb-1.5">Message</label>
+              <textarea id="message" name="message" rows="5" required placeholder="Tell me about your website, GHL, or social project..."
+                class="w-full rounded-lg border border-slate-700 bg-slate-950/60 px-4 py-3 text-sm text-white placeholder:text-slate-500 outline-none transition-all hover:border-slate-500 focus:border-[#38BDF8] focus:ring-1 focus:ring-[#38BDF8] resize-y"></textarea>
+            </div>
+            <button type="submit"
+              class="reveal-item inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#10B981] px-8 py-3.5 text-sm font-semibold text-slate-950 hover:bg-[#34d399] hover:shadow-emerald-glow transition-all">
+              <i data-lucide="send" class="w-4 h-4"></i>
+              Send Message
+            </button>
+            <p id="form-status" class="hidden text-sm text-[#10B981]"></p>
+          </form>
+
+          <div class="space-y-4 story-block delay-a">
+            <a href="mailto:ryan.barbacena.decena@gmail.com" class="reveal-item flex items-start gap-4 rounded-xl border border-slate-700/70 bg-slate-900/40 p-5 hover:border-[#38BDF8]/50 hover:-translate-y-0.5 transition-all group">
+              <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[#38BDF8]/10 text-[#38BDF8]">
+                <i data-lucide="mail" class="w-5 h-5"></i>
+              </span>
+              <div>
+                <p class="text-sm font-medium text-white">Email</p>
+                <p class="text-sm text-slate-400 group-hover:text-[#38BDF8] transition-colors break-all">ryan.barbacena.decena@gmail.com</p>
+              </div>
+            </a>
+            <a href="tel:+639610450383" class="reveal-item flex items-start gap-4 rounded-xl border border-slate-700/70 bg-slate-900/40 p-5 hover:border-[#10B981]/50 hover:-translate-y-0.5 transition-all group">
+              <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[#10B981]/10 text-[#10B981]">
+                <i data-lucide="phone" class="w-5 h-5"></i>
+              </span>
+              <div>
+                <p class="text-sm font-medium text-white">Phone</p>
+                <p class="text-sm text-slate-400 group-hover:text-[#10B981] transition-colors">+63-961-045-0383</p>
+              </div>
+            </a>
+            <div class="reveal-item flex items-start gap-4 rounded-xl border border-slate-700/70 bg-slate-900/40 p-5">
+              <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[#38BDF8]/10 text-[#38BDF8]">
+                <i data-lucide="map-pin" class="w-5 h-5"></i>
+              </span>
+              <div>
+                <p class="text-sm font-medium text-white">Location</p>
+                <p class="text-sm text-slate-400">Novaliches, Quezon City, Philippines</p>
+              </div>
+            </div>
+            <div class="reveal-item rounded-xl border border-dashed border-slate-700/80 bg-slate-900/30 p-5">
+              <p class="text-xs font-mono text-[#38BDF8] mb-2">Available for</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="rounded-full border border-slate-600 px-3 py-1 text-xs text-slate-300">Web builds</span>
+                <span class="rounded-full border border-slate-600 px-3 py-1 text-xs text-slate-300">GoHighLevel</span>
+                <span class="rounded-full border border-slate-600 px-3 py-1 text-xs text-slate-300">Social / Video</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-800/60 px-4 sm:px-6 lg:px-8 py-8">
+    <div class="mx-auto max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="font-mono text-sm text-slate-500">
+        <span class="text-[#38BDF8]">RD_</span> &copy; <span id="year"></span> Ryan Decena. Web · GHL · Social.
+      </p>
+      <div class="flex items-center gap-4">
+        <a href="mailto:ryan.barbacena.decena@gmail.com" class="text-slate-500 hover:text-[#38BDF8] transition-colors" aria-label="Email">
+          <i data-lucide="mail" class="w-5 h-5"></i>
+        </a>
+        <a href="tel:+639610450383" class="text-slate-500 hover:text-[#10B981] transition-colors" aria-label="Phone">
+          <i data-lucide="phone" class="w-5 h-5"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to top -->
+  <button type="button" id="scroll-top" aria-label="Scroll to top"
+    class="fixed bottom-6 right-6 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-[#38BDF8]/40 bg-slate-950/90 text-[#38BDF8] shadow-lg backdrop-blur-sm hover:bg-[#38BDF8] hover:text-slate-950 hover:shadow-cyan-glow">
+    <i data-lucide="chevron-up" class="w-5 h-5"></i>
+  </button>
+
+  <script>
+    lucide.createIcons();
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Scroll to top button
+    const scrollTopBtn = document.getElementById('scroll-top');
+    const toggleScrollTop = () => {
+      scrollTopBtn.classList.toggle('is-visible', window.scrollY > 400);
+    };
+    window.addEventListener('scroll', toggleScrollTop, { passive: true });
+    toggleScrollTop();
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Mobile menu
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+    let menuOpen = false;
+
+    menuToggle.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      mobileMenu.classList.toggle('hidden', !menuOpen);
+      menuIcon.setAttribute('data-lucide', menuOpen ? 'x' : 'menu');
+      lucide.createIcons();
+    });
+
+    document.querySelectorAll('.mobile-link').forEach((link) => {
+      link.addEventListener('click', () => {
+        menuOpen = false;
+        mobileMenu.classList.add('hidden');
+        menuIcon.setAttribute('data-lucide', 'menu');
+        lucide.createIcons();
+      });
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener('click', (e) => {
+        const id = anchor.getAttribute('href');
+        if (!id || id === '#') return;
+        const target = document.querySelector(id);
+        if (!target) return;
+        e.preventDefault();
+        const headerOffset = 72;
+        const top = target.getBoundingClientRect().top + window.scrollY - headerOffset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      });
+    });
+
+    // Story reveal
+    const storyObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+    );
+    document.querySelectorAll('.story-block').forEach((el) => storyObserver.observe(el));
+
+    // Stagger reveals (gallery + contact fields)
+    const staggerObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target;
+          const siblings = el.parentElement
+            ? [...el.parentElement.children].filter((c) => c.classList.contains('gallery-item') || c.classList.contains('reveal-item'))
+            : [];
+          const idx = Math.max(0, siblings.indexOf(el));
+          el.style.transitionDelay = `${Math.min(idx, 8) * 0.07}s`;
+          el.classList.add('is-visible');
+          staggerObserver.unobserve(el);
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -30px 0px' }
+    );
+    document.querySelectorAll('.gallery-item, .reveal-item').forEach((el) => staggerObserver.observe(el));
+
+    // Chapter rail active state (scroll spy — works for tall sections like Gallery)
+    const railLinks = document.querySelectorAll('.chapter-rail a[data-rail]');
+    const railSectionIds = ['web', 'ghl', 'social', 'gallery', 'contact'];
+    const railSections = railSectionIds
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+
+    function setActiveRail(id) {
+      railLinks.forEach((link) => {
+        link.classList.toggle('active', link.dataset.rail === id);
+      });
+    }
+
+    function updateActiveRail() {
+      const marker = window.scrollY + 140;
+      let current = railSections[0]?.id || '';
+      for (const section of railSections) {
+        if (section.offsetTop <= marker) {
+          current = section.id;
+        }
+      }
+      // Near page bottom → prefer Contact
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 80) {
+        current = 'contact';
+      }
+      if (current) setActiveRail(current);
+    }
+
+    railLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        setActiveRail(link.dataset.rail);
+      });
+    });
+
+    window.addEventListener('scroll', updateActiveRail, { passive: true });
+    window.addEventListener('resize', updateActiveRail);
+    updateActiveRail();
+
+    // Sticky scroll reveal (21st.dev-style) + progress bar + beam
+    const stickyCards = document.querySelectorAll('.sticky-card');
+    const stickyVisuals = document.querySelectorAll('.sticky-visual');
+    const storyBeam = document.getElementById('story-beam');
+    const scrollProgress = document.getElementById('scroll-progress');
+    let stickyIndex = 0;
+
+    function setStickyActive(index) {
+      if (index === stickyIndex && stickyCards[index]?.classList.contains('is-active')) return;
+      stickyIndex = index;
+      stickyCards.forEach((card, i) => {
+        card.classList.toggle('is-active', i === index);
+      });
+      stickyVisuals.forEach((visual) => {
+        visual.classList.toggle('is-active', Number(visual.dataset.visual) === index);
+      });
+    }
+
+    function updatePremiumScroll() {
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - window.innerHeight;
+      const pageProgress = max > 0 ? window.scrollY / max : 0;
+      if (scrollProgress) {
+        scrollProgress.style.transform = `scaleX(${Math.min(1, Math.max(0, pageProgress))})`;
+      }
+
+      if (!stickyCards.length) return;
+
+      const viewportMid = window.innerHeight * 0.42;
+      let best = 0;
+      let bestDist = Infinity;
+      stickyCards.forEach((card, i) => {
+        const rect = card.getBoundingClientRect();
+        const cardMid = rect.top + rect.height / 2;
+        const dist = Math.abs(cardMid - viewportMid);
+        if (dist < bestDist) {
+          bestDist = dist;
+          best = i;
+        }
+      });
+      setStickyActive(best);
+
+      if (storyBeam) {
+        const story = document.getElementById('story');
+        if (story) {
+          const rect = story.getBoundingClientRect();
+          const total = rect.height - window.innerHeight;
+          const raw = total > 0 ? (0 - rect.top) / total : 0;
+          const beam = Math.min(1, Math.max(0, raw));
+          storyBeam.style.transform = `scaleY(${Math.max(0.08, beam)})`;
+        }
+      }
+    }
+
+    window.addEventListener('scroll', updatePremiumScroll, { passive: true });
+    window.addEventListener('resize', updatePremiumScroll);
+    updatePremiumScroll();
+
+    // Light parallax
+    const orb1 = document.getElementById('parallax-orb-1');
+    const orb2 = document.getElementById('parallax-orb-2');
+    const portrait = document.getElementById('parallax-portrait');
+    let ticking = false;
+
+    window.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        if (orb1) orb1.style.transform = `translateY(${y * 0.06}px)`;
+        if (orb2) orb2.style.transform = `translateY(${y * -0.04}px)`;
+        if (portrait && window.innerWidth >= 1024) {
+          portrait.style.transform = `translateY(${y * 0.03}px)`;
+        }
+        ticking = false;
+      });
+    }, { passive: true });
+
+    // Contact form
+    document.getElementById('contact-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const status = document.getElementById('form-status');
+      status.textContent = 'Thanks! Your message is ready — connect via email to continue.';
+      status.classList.remove('hidden');
+      e.target.reset();
+    });
+
+    // Gallery filters
+    const galleryFilters = document.querySelectorAll('.gallery-filter');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+
+    function setGalleryFilter(filter) {
+      galleryFilters.forEach((b) => {
+        b.classList.toggle('active', b.dataset.filter === filter);
+      });
+
+      document.querySelectorAll('.gallery-group').forEach((group) => {
+        const show = filter === 'all' || group.dataset.group === filter;
+        group.classList.toggle('hidden', !show);
+      });
+
+      galleryItems.forEach((item, i) => {
+        const match = filter === 'all' || item.dataset.category === filter;
+        item.classList.toggle('hidden-item', !match);
+        if (match) {
+          item.style.transitionDelay = `${Math.min(i, 8) * 0.05}s`;
+          requestAnimationFrame(() => item.classList.add('is-visible'));
+        } else {
+          item.classList.remove('is-visible');
+        }
+      });
+      lucide.createIcons();
+    }
+
+    // Default: Web first
+    setGalleryFilter('web');
+
+    galleryFilters.forEach((btn) => {
+      btn.addEventListener('click', () => setGalleryFilter(btn.dataset.filter));
+    });
+
+    document.querySelectorAll('.gallery-jump').forEach((link) => {
+      link.addEventListener('click', (e) => {
+        const filter = link.dataset.openFilter;
+        if (!filter) return;
+        e.preventDefault();
+        setGalleryFilter(filter);
+        const gallery = document.getElementById('gallery');
+        const top = gallery.getBoundingClientRect().top + window.scrollY - 72;
+        window.scrollTo({ top, behavior: 'smooth' });
+      });
+    });
+
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightbox-image');
+    const lightboxVideo = document.getElementById('lightbox-video');
+    const lightboxEmbedWrap = document.getElementById('lightbox-embed-wrap');
+    const lightboxEmbed = document.getElementById('lightbox-embed');
+    const lightboxEmpty = document.getElementById('lightbox-empty');
+    const lightboxTitle = document.getElementById('lightbox-title');
+    const lightboxLink = document.getElementById('lightbox-link');
+    const lightboxLinkLabel = document.getElementById('lightbox-link-label');
+
+    function closeLightbox() {
+      lightbox.classList.add('hidden');
+      lightbox.classList.remove('flex');
+      lightboxVideo.pause();
+      lightboxVideo.removeAttribute('src');
+      lightboxVideo.load();
+      lightboxImage.removeAttribute('src');
+      lightboxImage.classList.add('hidden');
+      lightboxVideo.classList.add('hidden');
+      if (lightboxEmbed) {
+        lightboxEmbed.removeAttribute('src');
+        lightboxEmbedWrap.classList.add('hidden');
+      }
+      lightboxEmpty.classList.remove('hidden');
+      if (lightboxLink) {
+        lightboxLink.classList.add('hidden');
+        lightboxLink.removeAttribute('href');
+        if (lightboxLinkLabel) lightboxLinkLabel.textContent = 'Visit Live Site';
+      }
+      document.body.style.overflow = '';
+    }
+
+    function openLightbox(item) {
+      const type = item.dataset.type;
+      const src = item.dataset.src;
+      const title = item.dataset.title || '';
+      const url = item.dataset.url || '';
+      lightboxTitle.textContent = title;
+      lightboxImage.classList.add('hidden');
+      lightboxVideo.classList.add('hidden');
+      if (lightboxEmbedWrap) lightboxEmbedWrap.classList.add('hidden');
+      lightboxEmpty.classList.remove('hidden');
+
+      if (lightboxLink) {
+        if (url) {
+          lightboxLink.href = url;
+          lightboxLink.classList.remove('hidden');
+          if (lightboxLinkLabel) {
+            lightboxLinkLabel.textContent = item.dataset.linkLabel || 'Visit Live Site';
+          }
+        } else {
+          lightboxLink.classList.add('hidden');
+          lightboxLink.removeAttribute('href');
+          if (lightboxLinkLabel) lightboxLinkLabel.textContent = 'Visit Live Site';
+        }
+      }
+
+      if (type === 'embed') {
+        lightboxEmbed.src = src;
+        lightboxEmbedWrap.classList.remove('hidden');
+        lightboxEmpty.classList.add('hidden');
+      } else if (type === 'video') {
+        const poster = item.dataset.poster || '';
+        lightboxVideo.src = src;
+        if (poster) lightboxVideo.poster = poster;
+        lightboxVideo.classList.remove('hidden');
+        lightboxEmpty.classList.add('hidden');
+        lightboxVideo.play().catch(() => {});
+      } else {
+        const probe = new Image();
+        probe.onload = () => {
+          lightboxImage.src = src;
+          lightboxImage.alt = title;
+          lightboxImage.classList.remove('hidden');
+          lightboxEmpty.classList.add('hidden');
+        };
+        probe.onerror = () => {
+          lightboxImage.classList.add('hidden');
+          lightboxEmpty.classList.remove('hidden');
+        };
+        probe.src = src;
+      }
+
+      lightbox.classList.remove('hidden');
+      lightbox.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+      lucide.createIcons();
+    }
+
+    galleryItems.forEach((item) => {
+      item.addEventListener('click', () => {
+        // Web cards: open live site directly
+        if (item.dataset.category === 'web' && item.dataset.url) {
+          window.open(item.dataset.url, '_blank', 'noopener,noreferrer');
+          return;
+        }
+        openLightbox(item);
+      });
+    });
+
+    document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) closeLightbox();
+    });
+  </script>
 </body>
 </html>
