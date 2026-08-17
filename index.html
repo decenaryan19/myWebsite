@@ -42,13 +42,118 @@
         linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
       background-size: auto, auto, 48px 48px, 48px 48px;
     }
+    .hero-visual {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .hero-portrait-wrap {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+    }
+    /* Tablet+ */
+    @media (min-width: 768px) {
+      .hero-portrait-wrap {
+        width: 58%;
+        top: -8%;
+        bottom: auto;
+        height: 116%;
+      }
+    }
+    /* Laptop 1280–1919 */
+    @media (min-width: 1280px) {
+      .hero-portrait-wrap {
+        width: 54%;
+        top: -10%;
+        height: 120%;
+      }
+    }
+    /* Target: 1920 x 1080 and up — match reference framing */
+    @media (min-width: 1800px) {
+      .hero-portrait-wrap {
+        width: 52%;
+        max-width: 1000px;
+        top: -14%;
+        height: 124%;
+      }
+    }
     .hero-portrait {
-      mask-image: linear-gradient(90deg, transparent 0%, black 28%, black 100%),
-                  linear-gradient(180deg, black 55%, transparent 100%);
-      -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 28%, black 100%),
-                          linear-gradient(180deg, black 55%, transparent 100%);
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 55% 8%;
+      filter: saturate(0.95) contrast(1.03) brightness(0.96);
+      mask-image:
+        linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.4) 12%, black 34%, black 100%),
+        linear-gradient(180deg, black 0%, black 62%, rgba(0,0,0,0.5) 82%, transparent 100%);
+      -webkit-mask-image:
+        linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.4) 12%, black 34%, black 100%),
+        linear-gradient(180deg, black 0%, black 62%, rgba(0,0,0,0.5) 82%, transparent 100%);
       mask-composite: intersect;
       -webkit-mask-composite: source-in;
+    }
+    @media (min-width: 1280px) {
+      .hero-portrait {
+        object-position: 52% 10%;
+        mask-image:
+          linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.35) 10%, black 30%, black 100%),
+          linear-gradient(180deg, black 0%, black 58%, rgba(0,0,0,0.45) 78%, transparent 100%);
+        -webkit-mask-image:
+          linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.35) 10%, black 30%, black 100%),
+          linear-gradient(180deg, black 0%, black 58%, rgba(0,0,0,0.45) 78%, transparent 100%);
+      }
+    }
+    /* Exact lock for 1920-class viewports */
+    @media (min-width: 1800px) and (min-height: 900px) {
+      .hero-portrait {
+        object-position: 50% 12%;
+        mask-image:
+          linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.3) 8%, black 28%, black 100%),
+          linear-gradient(180deg, black 0%, black 55%, rgba(0,0,0,0.4) 76%, transparent 100%);
+        -webkit-mask-image:
+          linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.3) 8%, black 28%, black 100%),
+          linear-gradient(180deg, black 0%, black 55%, rgba(0,0,0,0.4) 76%, transparent 100%);
+      }
+      .hero-portrait-fade {
+        background:
+          linear-gradient(90deg, #0F172A 0%, rgba(15, 23, 42, 0.9) 26%, rgba(15, 23, 42, 0.3) 48%, transparent 66%),
+          linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, transparent 12%, transparent 52%, rgba(15, 23, 42, 0.5) 80%, #0F172A 100%);
+      }
+    }
+    .hero-portrait-fade {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, #0F172A 0%, rgba(15, 23, 42, 0.88) 24%, rgba(15, 23, 42, 0.28) 50%, transparent 70%),
+        linear-gradient(180deg, rgba(15, 23, 42, 0.25) 0%, transparent 14%, transparent 55%, rgba(15, 23, 42, 0.5) 82%, #0F172A 100%);
+    }
+    .hero-atmosphere {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 50% 45% at 20% 40%, rgba(56, 189, 248, 0.06), transparent 55%),
+        radial-gradient(ellipse 40% 50% at 72% 40%, rgba(15, 23, 42, 0.1), transparent 70%);
+    }
+    @media (max-width: 767px) {
+      .hero-portrait-wrap {
+        opacity: 0.48;
+        width: 100%;
+      }
+      .hero-portrait {
+        object-position: 58% 8%;
+        mask-image:
+          linear-gradient(180deg, transparent 0%, black 14%, black 50%, transparent 85%),
+          linear-gradient(90deg, transparent 0%, black 32%, black 100%);
+        -webkit-mask-image:
+          linear-gradient(180deg, transparent 0%, black 14%, black 50%, transparent 85%),
+          linear-gradient(90deg, transparent 0%, black 32%, black 100%);
+      }
     }
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(16px); }
@@ -86,6 +191,14 @@
       border-color: #38BDF8;
       box-shadow: 0 0 16px rgba(56, 189, 248, 0.35);
     }
+    #lightbox-embed-wrap[data-aspect="portrait"] {
+      max-width: 420px;
+      aspect-ratio: 9 / 16;
+    }
+    #lightbox-embed-wrap[data-aspect="landscape"] {
+      max-width: 64rem;
+      aspect-ratio: 16 / 9;
+    }
     .badge-neon {
       transition: all 0.25s ease;
     }
@@ -113,6 +226,72 @@
       opacity: 1;
       pointer-events: auto;
       transform: translateY(0);
+    }
+    /* Signal Hunt — large screens only */
+    #signal-hunt-layer {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 25;
+      pointer-events: none;
+    }
+    #signal-hunt {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    #signal-hud {
+      position: fixed;
+      right: 1.5rem;
+      bottom: 5.25rem;
+      z-index: 26;
+      pointer-events: none;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      color: rgba(148, 163, 184, 0.75);
+      background: rgba(15, 23, 42, 0.55);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 0.5rem;
+      padding: 0.45rem 0.7rem;
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.35s ease, transform 0.35s ease, border-color 0.25s ease, color 0.25s ease;
+    }
+    #signal-hud.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    #signal-hud.is-complete {
+      color: #38BDF8;
+      border-color: rgba(56, 189, 248, 0.45);
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.2);
+    }
+    #signal-hud .signal-count {
+      color: #38BDF8;
+    }
+    #signal-hud .signal-toast {
+      display: none;
+      margin-top: 0.2rem;
+      color: #10B981;
+      font-size: 10px;
+    }
+    #signal-hud.is-complete .signal-toast {
+      display: block;
+    }
+    @media (min-width: 1280px) {
+      #signal-hunt-layer.is-active {
+        display: block;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #signal-hunt-layer,
+      #signal-hud {
+        display: none !important;
+      }
     }
     /* Premium sticky scroll (21st.dev / Aceternity-style) */
     .sticky-scroll {
@@ -277,18 +456,19 @@
   <main>
     <!-- Hero -->
     <section id="home" class="relative min-h-screen flex items-center overflow-hidden pt-24 pb-16">
-      <div class="pointer-events-none absolute inset-0" aria-hidden="true">
-        <img
-          id="parallax-portrait"
-          src="assets/ryan-decena.png"
-          alt=""
-          class="hero-portrait absolute inset-y-0 right-0 h-full w-full object-cover object-[center_18%] opacity-40 sm:opacity-50 lg:w-[58%] lg:opacity-90 lg:object-[center_12%]"
-        />
-        <div class="absolute inset-0 bg-gradient-to-r from-[#0F172A] via-[#0F172A]/92 to-[#0F172A]/25 lg:via-[#0F172A]/75 lg:to-transparent"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-[#0F172A]/70"></div>
-        <div class="absolute inset-0 bg-gradient-to-br from-[#38BDF8]/10 via-transparent to-[#10B981]/10"></div>
-        <div id="parallax-orb-1" class="absolute top-1/4 right-1/4 h-64 w-64 rounded-full bg-[#38BDF8]/10 blur-3xl"></div>
-        <div id="parallax-orb-2" class="absolute bottom-1/4 right-1/3 h-48 w-48 rounded-full bg-[#10B981]/10 blur-3xl"></div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="hero-portrait-wrap">
+          <img
+            id="parallax-portrait"
+            src="assets/ryan-decena.png"
+            alt=""
+            class="hero-portrait"
+          />
+        </div>
+        <div class="hero-portrait-fade"></div>
+        <div class="hero-atmosphere"></div>
+        <div id="parallax-orb-1" class="absolute top-[18%] right-[20%] h-72 w-72 rounded-full bg-[#38BDF8]/08 blur-3xl"></div>
+        <div id="parallax-orb-2" class="absolute bottom-[20%] right-[30%] h-56 w-56 rounded-full bg-[#10B981]/06 blur-3xl"></div>
       </div>
 
       <div class="relative z-10 mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -695,41 +875,53 @@
           <div class="gallery-group" data-group="video">
             <div class="mb-4">
               <p class="font-mono text-xs uppercase tracking-wider text-[#10B981]">Video · Landscape</p>
+              <p class="text-sm text-slate-400">Facebook Reels &amp; YouTube</p>
             </div>
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              <button type="button" class="gallery-item group text-left" data-category="video" data-title="Landscape Video 1" data-type="video" data-src="assets/gallery/video/landscape-1.mp4" data-poster="assets/gallery/video/landscape-1.jpg">
+              <button type="button" class="gallery-item group text-left" data-category="video" data-title="CCGM Facebook Reel" data-type="embed" data-embed-aspect="landscape" data-src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1792472377789197&show_text=false&width=640" data-url="https://www.facebook.com/reel/1792472377789197" data-link-label="Watch on Facebook">
                 <div class="relative overflow-hidden rounded-xl border border-slate-700/70 bg-slate-900/50 aspect-video transition-all group-hover:border-[#10B981]/60 group-hover:-translate-y-1">
-                  <img src="assets/gallery/video/landscape-1.jpg" alt="" class="gallery-thumb absolute inset-0 h-full w-full object-cover opacity-0" onload="this.classList.add('opacity-100'); this.nextElementSibling.classList.add('hidden');" />
-                  <div class="gallery-placeholder absolute inset-0 flex flex-col items-center justify-center gap-2 bg-gradient-to-br from-slate-900 to-slate-800">
-                    <i data-lucide="play-circle" class="w-8 h-8 text-[#10B981]/70"></i>
-                    <p class="text-sm text-slate-300">Landscape 1</p>
-                    <p class="text-[10px] font-mono text-slate-500">landscape-1.mp4</p>
+                  <div class="absolute inset-0 bg-gradient-to-br from-[#1877F2]/20 via-slate-900 to-slate-950"></div>
+                  <div class="absolute inset-0 flex flex-col items-center justify-center gap-3 p-4 text-center">
+                    <span class="flex h-12 w-12 items-center justify-center rounded-full bg-[#1877F2] text-white shadow-lg">
+                      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12.07C22 6.48 17.52 2 11.93 2S1.86 6.48 1.86 12.07c0 5.02 3.66 9.18 8.44 9.93v-7.03H7.9v-2.9h2.4V9.86c0-2.37 1.4-3.68 3.56-3.68 1.03 0 2.11.18 2.11.18v2.32h-1.19c-1.17 0-1.54.73-1.54 1.48v1.78h2.62l-.42 2.9h-2.2V22c4.78-.75 8.44-4.91 8.44-9.93z"/></svg>
+                    </span>
+                    <p class="text-sm font-semibold text-white">CCGM Reel</p>
+                    <span class="text-[10px] font-mono uppercase tracking-wider text-slate-400">Facebook</span>
+                  </div>
+                  <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent p-4 pt-10">
+                    <span class="text-[10px] font-mono uppercase tracking-wider text-[#10B981]">Landscape</span>
+                    <p class="text-sm font-semibold text-white mt-0.5">Ministry Reel</p>
                   </div>
                   <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <span class="flex h-11 w-11 items-center justify-center rounded-full bg-slate-950/70 border border-[#10B981]/40 text-[#10B981]"><i data-lucide="play" class="w-4 h-4 ml-0.5"></i></span>
                   </div>
                 </div>
               </button>
-              <button type="button" class="gallery-item group text-left" data-category="video" data-title="Landscape Video 2" data-type="video" data-src="assets/gallery/video/landscape-2.mp4" data-poster="assets/gallery/video/landscape-2.jpg">
-                <div class="relative overflow-hidden rounded-xl border border-slate-700/70 bg-slate-900/50 aspect-video transition-all group-hover:border-[#10B981]/60 group-hover:-translate-y-1">
-                  <img src="assets/gallery/video/landscape-2.jpg" alt="" class="gallery-thumb absolute inset-0 h-full w-full object-cover opacity-0" onload="this.classList.add('opacity-100'); this.nextElementSibling.classList.add('hidden');" />
-                  <div class="gallery-placeholder absolute inset-0 flex flex-col items-center justify-center gap-2 bg-gradient-to-br from-slate-900 to-slate-800">
-                    <i data-lucide="play-circle" class="w-8 h-8 text-[#10B981]/70"></i>
-                    <p class="text-sm text-slate-300">Landscape 2</p>
-                    <p class="text-[10px] font-mono text-slate-500">landscape-2.mp4</p>
+              <button type="button" class="gallery-item group text-left" data-category="video" data-title="Inspirational Sample Vids" data-type="embed" data-embed-aspect="landscape" data-src="https://www.youtube.com/embed/9UspFMvijdc?autoplay=1&rel=0" data-url="https://youtu.be/9UspFMvijdc" data-link-label="Watch on YouTube">
+                <div class="relative overflow-hidden rounded-xl border border-slate-700/70 bg-slate-900/50 aspect-video transition-all group-hover:border-[#38BDF8]/60 group-hover:-translate-y-1">
+                  <img src="assets/gallery/video/landscape-youtube.jpg" alt="Inspirational Sample Vids" class="absolute inset-0 h-full w-full object-cover" />
+                  <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent p-4 pt-10">
+                    <span class="text-[10px] font-mono uppercase tracking-wider text-[#38BDF8]">YouTube</span>
+                    <p class="text-sm font-semibold text-white mt-0.5">Inspirational Sample Vids</p>
                   </div>
                   <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <span class="flex h-11 w-11 items-center justify-center rounded-full bg-slate-950/70 border border-[#10B981]/40 text-[#10B981]"><i data-lucide="play" class="w-4 h-4 ml-0.5"></i></span>
+                    <span class="flex h-11 w-11 items-center justify-center rounded-full bg-slate-950/70 border border-[#38BDF8]/40 text-[#38BDF8]"><i data-lucide="play" class="w-4 h-4 ml-0.5"></i></span>
                   </div>
                 </div>
               </button>
-              <button type="button" class="gallery-item group text-left" data-category="video" data-title="Landscape Video 3" data-type="video" data-src="assets/gallery/video/landscape-3.mp4" data-poster="assets/gallery/video/landscape-3.jpg">
+              <button type="button" class="gallery-item group text-left" data-category="video" data-title="CCGM Facebook Reel 2" data-type="embed" data-embed-aspect="landscape" data-src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F727344102168303&show_text=false&width=640" data-url="https://www.facebook.com/reel/727344102168303" data-link-label="Watch on Facebook">
                 <div class="relative overflow-hidden rounded-xl border border-slate-700/70 bg-slate-900/50 aspect-video transition-all group-hover:border-[#10B981]/60 group-hover:-translate-y-1">
-                  <img src="assets/gallery/video/landscape-3.jpg" alt="" class="gallery-thumb absolute inset-0 h-full w-full object-cover opacity-0" onload="this.classList.add('opacity-100'); this.nextElementSibling.classList.add('hidden');" />
-                  <div class="gallery-placeholder absolute inset-0 flex flex-col items-center justify-center gap-2 bg-gradient-to-br from-slate-900 to-slate-800">
-                    <i data-lucide="play-circle" class="w-8 h-8 text-[#10B981]/70"></i>
-                    <p class="text-sm text-slate-300">Landscape 3</p>
-                    <p class="text-[10px] font-mono text-slate-500">landscape-3.mp4</p>
+                  <div class="absolute inset-0 bg-gradient-to-br from-[#1877F2]/20 via-slate-900 to-slate-950"></div>
+                  <div class="absolute inset-0 flex flex-col items-center justify-center gap-3 p-4 text-center">
+                    <span class="flex h-12 w-12 items-center justify-center rounded-full bg-[#1877F2] text-white shadow-lg">
+                      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12.07C22 6.48 17.52 2 11.93 2S1.86 6.48 1.86 12.07c0 5.02 3.66 9.18 8.44 9.93v-7.03H7.9v-2.9h2.4V9.86c0-2.37 1.4-3.68 3.56-3.68 1.03 0 2.11.18 2.11.18v2.32h-1.19c-1.17 0-1.54.73-1.54 1.48v1.78h2.62l-.42 2.9h-2.2V22c4.78-.75 8.44-4.91 8.44-9.93z"/></svg>
+                    </span>
+                    <p class="text-sm font-semibold text-white">CCGM Reel</p>
+                    <span class="text-[10px] font-mono uppercase tracking-wider text-slate-400">Facebook</span>
+                  </div>
+                  <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent p-4 pt-10">
+                    <span class="text-[10px] font-mono uppercase tracking-wider text-[#10B981]">Landscape</span>
+                    <p class="text-sm font-semibold text-white mt-0.5">Ministry Reel 2</p>
                   </div>
                   <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <span class="flex h-11 w-11 items-center justify-center rounded-full bg-slate-950/70 border border-[#10B981]/40 text-[#10B981]"><i data-lucide="play" class="w-4 h-4 ml-0.5"></i></span>
@@ -743,7 +935,7 @@
               <p class="text-sm text-slate-400">YouTube Shorts &amp; Facebook Reels</p>
             </div>
             <div class="grid grid-cols-3 gap-4 sm:gap-5">
-              <button type="button" class="gallery-item group text-left" data-category="video" data-title="The Impossibilities Expert" data-type="embed" data-src="https://www.youtube.com/embed/52NVaOIZe3o?autoplay=1&rel=0" data-url="https://youtube.com/shorts/52NVaOIZe3o" data-link-label="Watch on YouTube">
+              <button type="button" class="gallery-item group text-left" data-category="video" data-title="The Impossibilities Expert" data-type="embed" data-embed-aspect="portrait" data-src="https://www.youtube.com/embed/52NVaOIZe3o?autoplay=1&rel=0" data-url="https://youtube.com/shorts/52NVaOIZe3o" data-link-label="Watch on YouTube">
                 <div class="relative mx-auto w-full max-w-[280px] overflow-hidden rounded-xl border border-slate-700/70 bg-slate-900/50 aspect-[9/16] transition-all group-hover:border-[#38BDF8]/60 group-hover:-translate-y-1">
                   <img src="assets/gallery/video/portrait-1.jpg" alt="The Impossibilities Expert" class="absolute inset-0 h-full w-full object-cover" />
                   <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent p-3.5 pt-12">
@@ -755,7 +947,7 @@
                   </div>
                 </div>
               </button>
-              <button type="button" class="gallery-item group text-left" data-category="video" data-title="CCGM Facebook Reel" data-type="embed" data-src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F3592950600857866&show_text=false&width=360" data-url="https://www.facebook.com/reel/3592950600857866" data-link-label="Watch on Facebook">
+              <button type="button" class="gallery-item group text-left" data-category="video" data-title="CCGM Facebook Reel" data-type="embed" data-embed-aspect="portrait" data-src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F3592950600857866&show_text=false&width=360" data-url="https://www.facebook.com/reel/3592950600857866" data-link-label="Watch on Facebook">
                 <div class="relative mx-auto w-full max-w-[280px] overflow-hidden rounded-xl border border-slate-700/70 bg-slate-900/50 aspect-[9/16] transition-all group-hover:border-[#10B981]/60 group-hover:-translate-y-1">
                   <div class="absolute inset-0 bg-gradient-to-br from-[#1877F2]/25 via-slate-900 to-slate-950"></div>
                   <div class="absolute inset-0 flex flex-col items-center justify-center gap-4 p-4 text-center">
@@ -774,7 +966,7 @@
                   </div>
                 </div>
               </button>
-              <button type="button" class="gallery-item group text-left" data-category="video" data-title="Canva Edit Short" data-type="embed" data-src="https://www.youtube.com/embed/Hlpv1rY1Wfs?autoplay=1&rel=0" data-url="https://youtube.com/shorts/Hlpv1rY1Wfs" data-link-label="Watch on YouTube">
+              <button type="button" class="gallery-item group text-left" data-category="video" data-title="Canva Edit Short" data-type="embed" data-embed-aspect="portrait" data-src="https://www.youtube.com/embed/Hlpv1rY1Wfs?autoplay=1&rel=0" data-url="https://youtube.com/shorts/Hlpv1rY1Wfs" data-link-label="Watch on YouTube">
                 <div class="relative mx-auto w-full max-w-[280px] overflow-hidden rounded-xl border border-slate-700/70 bg-slate-900/50 aspect-[9/16] transition-all group-hover:border-[#38BDF8]/60 group-hover:-translate-y-1">
                   <img src="assets/gallery/video/portrait-3.jpg" alt="Canva Edit Short" class="absolute inset-0 h-full w-full object-cover" />
                   <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent p-3.5 pt-12">
@@ -873,7 +1065,7 @@
         <div class="relative overflow-hidden rounded-xl border border-slate-700 bg-slate-900">
           <img id="lightbox-image" src="" alt="" class="hidden max-h-[82vh] w-full object-contain" />
           <video id="lightbox-video" class="hidden max-h-[75vh] w-full" controls playsinline></video>
-          <div id="lightbox-embed-wrap" class="hidden mx-auto w-full max-w-[420px] aspect-[9/16] bg-black">
+          <div id="lightbox-embed-wrap" class="hidden mx-auto w-full bg-black" data-aspect="portrait">
             <iframe id="lightbox-embed" class="h-full w-full" src="" title="Video embed" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
           </div>
           <div id="lightbox-empty" class="flex min-h-[240px] flex-col items-center justify-center gap-2 p-8 text-center">
@@ -985,6 +1177,15 @@
       </div>
     </div>
   </footer>
+
+  <!-- Signal Hunt (large screens) -->
+  <div id="signal-hunt-layer" aria-hidden="true">
+    <canvas id="signal-hunt"></canvas>
+  </div>
+  <div id="signal-hud" aria-live="polite">
+    <span>Signals <span class="signal-count" id="signal-count">0</span>/9</span>
+    <div class="signal-toast">Pipeline linked · Web → GHL → Social</div>
+  </div>
 
   <!-- Scroll to top -->
   <button type="button" id="scroll-top" aria-label="Scroll to top"
@@ -1171,10 +1372,9 @@
     window.addEventListener('resize', updatePremiumScroll);
     updatePremiumScroll();
 
-    // Light parallax
+    // Light parallax (orbs only — portrait stays locked for stable framing)
     const orb1 = document.getElementById('parallax-orb-1');
     const orb2 = document.getElementById('parallax-orb-2');
-    const portrait = document.getElementById('parallax-portrait');
     let ticking = false;
 
     window.addEventListener('scroll', () => {
@@ -1184,9 +1384,6 @@
         const y = window.scrollY;
         if (orb1) orb1.style.transform = `translateY(${y * 0.06}px)`;
         if (orb2) orb2.style.transform = `translateY(${y * -0.04}px)`;
-        if (portrait && window.innerWidth >= 1024) {
-          portrait.style.transform = `translateY(${y * 0.03}px)`;
-        }
         ticking = false;
       });
     }, { passive: true });
@@ -1305,6 +1502,8 @@
       }
 
       if (type === 'embed') {
+        const aspect = item.dataset.embedAspect || 'portrait';
+        if (lightboxEmbedWrap) lightboxEmbedWrap.dataset.aspect = aspect;
         lightboxEmbed.src = src;
         lightboxEmbedWrap.classList.remove('hidden');
         lightboxEmpty.classList.add('hidden');
@@ -1354,6 +1553,283 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) closeLightbox();
     });
+
+    // Signal Hunt — soft collectibles for large screens
+    (function initSignalHunt() {
+      const layer = document.getElementById('signal-hunt-layer');
+      const canvas = document.getElementById('signal-hunt');
+      const hud = document.getElementById('signal-hud');
+      const countEl = document.getElementById('signal-count');
+      if (!layer || !canvas || !hud || !countEl) return;
+
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const wide = window.matchMedia('(min-width: 1280px)');
+      const TOTAL = 9;
+      const TAGS = ['Web', 'GHL', 'Social'];
+      const COLORS = {
+        Web: { fill: '56, 189, 248', glow: '56, 189, 248' },
+        GHL: { fill: '16, 185, 129', glow: '16, 185, 129' },
+        Social: { fill: '125, 211, 252', glow: '56, 189, 248' },
+      };
+
+      const ctx = canvas.getContext('2d');
+      let nodes = [];
+      let caught = 0;
+      let complete = false;
+      let raf = 0;
+      let running = false;
+      let mouse = { x: -9999, y: -9999 };
+      let hudIdleTimer = 0;
+      let pulses = [];
+      let dpr = 1;
+
+      function enabled() {
+        return wide.matches && !reduced.matches;
+      }
+
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.floor(window.innerWidth * dpr);
+        canvas.height = Math.floor(window.innerHeight * dpr);
+        canvas.style.width = `${window.innerWidth}px`;
+        canvas.style.height = `${window.innerHeight}px`;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function safeZones() {
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        // Left margin + far-right fade; avoid hero copy column & face
+        return [
+          { x: 48, y: 100, w: Math.min(220, w * 0.14), h: h - 180 },
+          { x: w * 0.72, y: 90, w: w * 0.24, h: h * 0.38 },
+          { x: w * 0.78, y: h * 0.55, w: w * 0.18, h: h * 0.32 },
+        ];
+      }
+
+      function randInZone(zone) {
+        return {
+          x: zone.x + Math.random() * zone.w,
+          y: zone.y + Math.random() * zone.h,
+        };
+      }
+
+      function spawnNodes() {
+        const zones = safeZones();
+        nodes = [];
+        for (let i = 0; i < TOTAL; i++) {
+          const zone = zones[i % zones.length];
+          const pos = randInZone(zone);
+          const tag = TAGS[i % TAGS.length];
+          nodes.push({
+            id: i,
+            tag,
+            x: pos.x,
+            y: pos.y,
+            homeX: pos.x,
+            homeY: pos.y,
+            r: 5 + Math.random() * 2.5,
+            phase: Math.random() * Math.PI * 2,
+            speed: 0.35 + Math.random() * 0.35,
+            amp: 10 + Math.random() * 14,
+            caught: false,
+            opacity: 0.32 + Math.random() * 0.16,
+          });
+        }
+        caught = 0;
+        complete = false;
+        pulses = [];
+        countEl.textContent = '0';
+        hud.classList.remove('is-complete');
+      }
+
+      function showHud(force) {
+        if (!enabled()) return;
+        hud.classList.add('is-visible');
+        clearTimeout(hudIdleTimer);
+        if (!force && !complete) {
+          hudIdleTimer = setTimeout(() => {
+            if (caught === 0) hud.classList.remove('is-visible');
+          }, 4200);
+        }
+      }
+
+      function catchNode(node) {
+        if (node.caught || complete) return;
+        node.caught = true;
+        caught += 1;
+        countEl.textContent = String(caught);
+        showHud(true);
+        pulses.push({ x: node.x, y: node.y, life: 1, color: COLORS[node.tag].glow });
+
+        if (caught >= TOTAL) {
+          complete = true;
+          hud.classList.add('is-complete');
+          showHud(true);
+          setTimeout(() => {
+            hud.classList.remove('is-visible');
+          }, 5200);
+        }
+      }
+
+      function nearestNode(x, y, radius) {
+        let best = null;
+        let bestDist = radius;
+        for (const n of nodes) {
+          if (n.caught) continue;
+          const d = Math.hypot(n.x - x, n.y - y);
+          if (d < bestDist) {
+            bestDist = d;
+            best = n;
+          }
+        }
+        return best;
+      }
+
+      function draw() {
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        ctx.clearRect(0, 0, w, h);
+        const t = performance.now() / 1000;
+
+        // faint links between nearby live nodes
+        const live = nodes.filter((n) => !n.caught);
+        for (let i = 0; i < live.length; i++) {
+          for (let j = i + 1; j < live.length; j++) {
+            const a = live[i];
+            const b = live[j];
+            const dist = Math.hypot(a.x - b.x, a.y - b.y);
+            if (dist < 160) {
+              ctx.beginPath();
+              ctx.strokeStyle = `rgba(56, 189, 248, ${0.06 * (1 - dist / 160)})`;
+              ctx.lineWidth = 1;
+              ctx.moveTo(a.x, a.y);
+              ctx.lineTo(b.x, b.y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        for (const n of nodes) {
+          if (n.caught) continue;
+          n.x = n.homeX + Math.sin(t * n.speed + n.phase) * n.amp;
+          n.y = n.homeY + Math.cos(t * n.speed * 0.85 + n.phase) * (n.amp * 0.7);
+
+          const near = Math.hypot(n.x - mouse.x, n.y - mouse.y) < 42;
+          const c = COLORS[n.tag];
+          const alpha = near ? Math.min(0.75, n.opacity + 0.28) : n.opacity;
+
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(${c.glow}, ${alpha * 0.18})`;
+          ctx.arc(n.x, n.y, n.r * 3.2, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(${c.fill}, ${alpha})`;
+          ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+          ctx.fill();
+
+          if (near) {
+            ctx.font = '500 10px "JetBrains Mono", monospace';
+            ctx.fillStyle = `rgba(${c.fill}, 0.85)`;
+            ctx.textAlign = 'center';
+            ctx.fillText(n.tag, n.x, n.y - n.r - 8);
+          }
+        }
+
+        pulses = pulses.filter((p) => p.life > 0);
+        for (const p of pulses) {
+          const r = (1 - p.life) * 36;
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(${p.color}, ${p.life * 0.55})`;
+          ctx.lineWidth = 1.5;
+          ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+          ctx.stroke();
+          p.life -= 0.04;
+        }
+      }
+
+      function loop() {
+        if (!running) return;
+        draw();
+        raf = requestAnimationFrame(loop);
+      }
+
+      function start() {
+        if (!enabled() || running) return;
+        layer.classList.add('is-active');
+        resize();
+        if (!nodes.length) spawnNodes();
+        running = true;
+        setTimeout(() => showHud(false), 900);
+        raf = requestAnimationFrame(loop);
+      }
+
+      function stop() {
+        running = false;
+        cancelAnimationFrame(raf);
+        layer.classList.remove('is-active');
+        hud.classList.remove('is-visible');
+        if (ctx) ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      }
+
+      function sync() {
+        if (enabled()) {
+          if (!nodes.length) spawnNodes();
+          start();
+        } else {
+          stop();
+        }
+      }
+
+      // Hit-test only — never block page scroll/clicks
+      document.addEventListener('pointermove', (e) => {
+        if (!running || complete) return;
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+        const n = nearestNode(mouse.x, mouse.y, 26);
+        if (n) catchNode(n);
+      }, { passive: true });
+
+      document.addEventListener('click', (e) => {
+        if (!running || complete) return;
+        const n = nearestNode(e.clientX, e.clientY, 34);
+        if (n) catchNode(n);
+      }, true);
+
+      window.addEventListener('resize', () => {
+        if (!enabled()) {
+          stop();
+          return;
+        }
+        resize();
+        const zones = safeZones();
+        nodes.forEach((n, i) => {
+          if (n.caught) return;
+          const zone = zones[i % zones.length];
+          const pos = randInZone(zone);
+          n.homeX = pos.x;
+          n.homeY = pos.y;
+          n.x = pos.x;
+          n.y = pos.y;
+        });
+        if (!running) start();
+      });
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          cancelAnimationFrame(raf);
+          running = false;
+        } else if (enabled()) {
+          running = true;
+          raf = requestAnimationFrame(loop);
+        }
+      });
+
+      wide.addEventListener('change', sync);
+      reduced.addEventListener('change', sync);
+      sync();
+    })();
   </script>
 </body>
 </html>
