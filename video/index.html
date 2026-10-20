@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ryan Decena — AI Video & Multimedia Editor</title>
+<meta name="description" content="Portfolio of Ryan Decena, AI video and multimedia content editor from Quezon City, Philippines." />
+<meta name="theme-color" content="#0b0b0d" />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root{--bg:#0b0b0d;--fg:#f3efe6;--muted:#8d887d;--red:#ff3b2f;--yellow:#ffd23f;--teal:#19c3b0;--line:#ffffff1a}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:'Space Grotesk',sans-serif;overflow-x:hidden}
+h1,h2,h3,.disp{font-family:'Bebas Neue',sans-serif;letter-spacing:.02em;font-weight:400}
+a{color:inherit}
+#bg{position:fixed;inset:0;z-index:0}
+main{position:relative;z-index:1}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.07;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+nav{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:space-between;align-items:center;padding:18px 5vw;mix-blend-mode:difference}
+nav .logo{font-family:'Bebas Neue';font-size:28px}
+nav ul{display:flex;gap:28px;list-style:none;font-size:14px;text-transform:uppercase;letter-spacing:.15em}
+nav a{text-decoration:none}
+.rec{display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.2em}
+.rec i{width:10px;height:10px;border-radius:50%;background:var(--red);animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.2}}
+#progress{position:fixed;left:0;top:0;height:3px;background:linear-gradient(90deg,var(--red),var(--yellow),var(--teal));z-index:60;width:0}
+section{min-height:100vh;padding:120px 5vw;position:relative}
+
+/* HERO */
+.hero{display:flex;flex-direction:column;justify-content:center;perspective:1000px}
+.hero .tc{font-family:'Bebas Neue';color:var(--yellow);font-size:18px;letter-spacing:.3em}
+.hero h1{font-size:clamp(80px,17vw,260px);line-height:.85;transform-style:preserve-3d}
+.hero h1 span{display:inline-block;animation:drop 1s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes drop{from{transform:translateY(-120px) rotateX(90deg);opacity:0}}
+.hero h1 .o{-webkit-text-stroke:2px var(--fg);color:transparent}
+.hero p{max-width:560px;color:var(--muted);font-size:18px;margin-top:24px}
+.hero .role{margin-top:12px;font-size:14px;letter-spacing:.25em;text-transform:uppercase;color:var(--teal)}
+.scroll-hint{position:absolute;bottom:40px;left:5vw;font-size:12px;letter-spacing:.3em;animation:bob 2s infinite}
+@keyframes bob{50%{transform:translateY(8px)}}
+
+/* marquee */
+.marquee{overflow:hidden;border-block:1px solid var(--line);padding:18px 0;background:var(--yellow);color:var(--bg);transform:rotate(-2deg);margin:0 -2vw}
+.marquee div{display:flex;gap:48px;white-space:nowrap;font-family:'Bebas Neue';font-size:48px;animation:mq 22s linear infinite;width:max-content}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+.label{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--red);margin-bottom:12px}
+h2{font-size:clamp(56px,9vw,140px);line-height:.9;margin-bottom:48px}
+
+/* reveal */
+.rv{opacity:0;transform:perspective(800px) translateY(80px) rotateX(-30deg);transition:1s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+
+/* thumbnails — video frame + label below (matched) */
+.clip{display:flex;flex-direction:column;gap:10px;cursor:pointer}
+.thumb{position:relative;border-radius:14px;overflow:hidden;background:#111;aspect-ratio:var(--ar,9/16);width:100%}
+.thumb video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#0a0a0c;z-index:0}
+.thumb::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,#0000 0 3px,#0001 3px 4px);z-index:1;pointer-events:none}
+.thumb .play{position:absolute;inset:0;display:grid;place-items:center;z-index:2}
+.thumb .play b{width:56px;height:56px;border-radius:50%;background:#0009;display:grid;place-items:center;backdrop-filter:blur(6px);transition:.3s}
+.thumb .play b::after{content:"";border-left:16px solid var(--fg);border-block:10px solid transparent;margin-left:4px}
+.clip:hover .play b{transform:scale(1.2);background:var(--red)}
+.clip .meta{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:0 2px}
+.clip .meta strong{font-family:'Bebas Neue';font-size:clamp(18px,2vw,26px);letter-spacing:.03em;line-height:1.05}
+.clip .meta span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap;flex-shrink:0}
+
+/* 1. 3D carousel */
+.ring-wrap{height:560px;perspective:1400px;display:grid;place-items:center}
+.ring{position:relative;width:220px;height:390px;transform-style:preserve-3d}
+.ring .clip{position:absolute;inset:0;width:100%;height:100%}
+.ring .thumb{height:100%;box-shadow:0 30px 60px #0008;--ar:auto}
+.ring .meta{display:none}
+.ring-ctrl{display:flex;gap:12px;justify-content:center;margin-top:24px}
+button{font:inherit;background:none;border:1px solid var(--fg);color:var(--fg);padding:12px 22px;border-radius:999px;cursor:pointer;text-transform:uppercase;letter-spacing:.15em;font-size:12px;transition:.25s}
+button:hover,button.on{background:var(--fg);color:var(--bg)}
+
+/* 2. horizontal filmstrip */
+.film{height:700vh;padding:0}
+.film .sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding:0 5vw}
+.track{display:flex;gap:28px;align-items:flex-end;will-change:transform}
+.frame{flex:0 0 auto;background:#111;padding:26px 14px 16px;border-radius:6px;position:relative;width:calc(min(58vh,420px)*9/16 + 28px)}
+.frame.wide{width:calc(min(42vh,300px)*16/9 + 28px)}
+.frame::before,.frame::after{content:"";position:absolute;left:10px;right:10px;height:8px;background:repeating-linear-gradient(90deg,var(--bg) 0 12px,#0000 12px 24px)}
+.frame::before{top:8px}.frame::after{bottom:8px}
+.frame .thumb{height:min(58vh,420px);width:100%;aspect-ratio:auto}
+.frame.wide .thumb{height:min(42vh,300px)}
+.frame .n{font-family:'Bebas Neue';color:var(--yellow);margin-top:4px;font-size:18px;line-height:1.15;word-break:break-word}
+.frame .meta strong{font-size:20px}
+
+/* 3. masonry tilt + filter */
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px}
+.filters button{white-space:nowrap}
+.masonry{columns:4 220px;column-gap:18px}
+.masonry .item{break-inside:avoid;margin-bottom:22px;transform-style:preserve-3d;transition:transform .15s,opacity .4s,scale .4s}
+.masonry .item.hide{display:none}
+.masonry .item.wide{column-span:all;max-width:640px}
+.masonry .item.wide .thumb{max-height:360px}
+
+/* 4. flip cards */
+.flips{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px}
+.flip{perspective:1000px;height:340px}
+.flip .in2{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.3,1.4,.5,1)}
+.flip:hover .in2{transform:rotateY(180deg)}
+.flip .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:24px;display:flex;flex-direction:column;justify-content:flex-end}
+.flip .front{background:var(--g)}
+.flip .front h3{font-size:44px;line-height:.9}
+.flip .back{background:#16161a;border:1px solid var(--line);transform:rotateY(180deg);justify-content:center;gap:12px}
+.flip .back p{color:var(--muted);font-size:15px}
+
+/* 5. stack cards */
+.stack-sec{padding-bottom:40vh}
+.stack .card{position:sticky;top:120px;min-height:56vh;margin-bottom:10vh;border-radius:24px;padding:40px;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;background:#141418;border:1px solid var(--line);transform-origin:top center;box-shadow:0 -20px 60px #0009}
+.stack .card h3{font-size:clamp(40px,5vw,72px);line-height:.9}
+.stack .card .yr{color:var(--yellow);font-family:'Bebas Neue';font-size:24px}
+.stack .card ul{margin-top:16px;padding-left:18px;color:var(--muted);line-height:1.6}
+.stack .card .clip{max-width:280px;margin-inline:auto;width:100%}
+.stack .card .thumb{max-height:48vh}
+
+/* timeline */
+.tl{border-left:2px solid var(--line);padding-left:32px;display:grid;gap:36px}
+.tl div{position:relative}
+.tl div::before{content:"";position:absolute;left:-41px;top:6px;width:16px;height:16px;border-radius:50%;background:var(--red);box-shadow:0 0 0 6px #ff3b2f33}
+.tl span{color:var(--yellow);font-family:'Bebas Neue';font-size:22px}
+.tl h3{font-size:36px}
+.tl p{color:var(--muted)}
+
+/* tools cube */
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.cube-scene{perspective:900px;height:320px;display:grid;place-items:center}
+.cube{width:200px;height:200px;position:relative;transform-style:preserve-3d;animation:spin 14s linear infinite}
+.cube div{position:absolute;inset:0;display:grid;place-items:center;font-family:'Bebas Neue';font-size:34px;border:2px solid var(--fg);background:#0b0b0dcc}
+.cube div:nth-child(1){transform:translateZ(100px);color:var(--red)}
+.cube div:nth-child(2){transform:rotateY(90deg) translateZ(100px);color:var(--yellow)}
+.cube div:nth-child(3){transform:rotateY(180deg) translateZ(100px);color:var(--teal)}
+.cube div:nth-child(4){transform:rotateY(-90deg) translateZ(100px)}
+.cube div:nth-child(5){transform:rotateX(90deg) translateZ(100px);color:var(--yellow)}
+.cube div:nth-child(6){transform:rotateX(-90deg) translateZ(100px);color:var(--red)}
+@keyframes spin{to{transform:rotateX(360deg) rotateY(720deg)}}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chips span{border:1px solid var(--line);padding:10px 16px;border-radius:999px;font-size:14px;transition:.3s}
+.chips span:hover{background:var(--teal);color:var(--bg);transform:translateY(-4px) rotate(-3deg)}
+
+/* contact */
+.contact{text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.contact h2{font-size:clamp(70px,14vw,220px)}
+.contact a.big{font-size:clamp(18px,2.5vw,32px);border-bottom:2px solid var(--red);text-decoration:none}
+.contact .links{display:flex;gap:16px;margin-top:40px;flex-wrap:wrap;justify-content:center}
+.contact .links a{text-decoration:none}
+footer{padding:30px 5vw;color:var(--muted);font-size:12px;letter-spacing:.2em;display:flex;justify-content:space-between}
+
+/* back to top */
+#toTop{position:fixed;right:22px;bottom:22px;z-index:55;width:48px;height:48px;border-radius:50%;border:1px solid var(--fg);background:#0b0b0dcc;color:var(--fg);display:grid;place-items:center;cursor:pointer;opacity:0;pointer-events:none;transform:translateY(12px);transition:.35s;backdrop-filter:blur(8px);padding:0}
+#toTop.show{opacity:1;pointer-events:auto;transform:none}
+#toTop:hover{background:var(--red);border-color:var(--red);color:var(--fg)}
+#toTop svg{width:20px;height:20px;display:block}
+
+/* lightbox */
+#lb{position:fixed;inset:0;background:#000d;z-index:70;display:grid;place-items:center;opacity:0;pointer-events:none;transition:.4s;padding:24px}
+#lb.on{opacity:1;pointer-events:auto}
+#lb .box{width:min(960px,92vw);transform:scale(.6) rotateX(40deg);transition:.6s cubic-bezier(.2,1.4,.4,1)}
+#lb.on .box{transform:none}
+#lb video{width:100%;max-height:72vh;border-radius:14px;background:#000;display:block;object-fit:contain}
+#lb .box.portrait{width:min(420px,92vw)}
+#lb .box.landscape{width:min(960px,92vw)}
+#lb h3{font-size:clamp(28px,5vw,48px);margin-top:16px;line-height:1}
+#lb .close{position:absolute;top:24px;right:28px;font-size:28px;cursor:pointer;opacity:.7;border:none;color:var(--fg);padding:8px 14px}
+#lb .close:hover{opacity:1;background:transparent;color:var(--fg)}
+
+/* page transition wipe */
+#wipe{position:fixed;inset:0;z-index:80;pointer-events:none;display:flex}
+#wipe i{flex:1;background:var(--red);transform:scaleY(0);transform-origin:bottom}
+#wipe.go i{animation:wipe .9s cubic-bezier(.7,0,.3,1) forwards}
+#wipe i:nth-child(2){background:var(--yellow);animation-delay:.05s!important}
+#wipe i:nth-child(3){background:var(--teal);animation-delay:.1s!important}
+#wipe i:nth-child(4){background:var(--fg);animation-delay:.15s!important}
+@keyframes wipe{0%{transform:scaleY(0);transform-origin:bottom}45%{transform:scaleY(1);transform-origin:bottom}55%{transform:scaleY(1);transform-origin:top}100%{transform:scaleY(0);transform-origin:top}}
+
+@media(max-width:800px){
+  section{padding:88px 5vw 56px;min-height:auto}
+  h2{font-size:clamp(40px,13vw,72px);margin-bottom:24px}
+  .label{margin-bottom:8px}
+  nav ul{display:none}
+  .hero h1{font-size:clamp(64px,18vw,120px)}
+  .hero p{font-size:15px}
+  .ring-wrap{height:440px}
+  .ring{width:160px;height:284px}
+  .filters{
+    flex-wrap:nowrap;gap:8px;margin:0 -5vw 24px;padding:4px 5vw 10px;
+    overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;scroll-snap-type:x proximity
+  }
+  .filters::-webkit-scrollbar{display:none}
+  .filters button{flex:0 0 auto;padding:10px 14px;font-size:11px;letter-spacing:.12em;scroll-snap-align:start}
+  .masonry{columns:2 140px;column-gap:12px}
+  .masonry .item{margin-bottom:14px}
+  .masonry .item.wide{column-span:none;max-width:none}
+  .masonry .item.wide .thumb{max-height:none}
+  .clip .meta{gap:6px}
+  .clip .meta strong{font-size:15px}
+  .clip .meta span{font-size:9px;letter-spacing:.08em}
+  .thumb .play b{width:44px;height:44px}
+  .thumb .play b::after{border-left-width:12px;border-block-width:8px}
+  .stack .card{grid-template-columns:1fr;min-height:auto;padding:24px;gap:20px}
+  .stack .card .clip{max-width:200px}
+  .stack .card h3{font-size:clamp(32px,10vw,48px)}
+  .tools{grid-template-columns:1fr;gap:32px}
+  .frame{width:calc(min(50vh,360px)*9/16 + 28px)}
+  .frame.wide{width:calc(min(28vh,200px)*16/9 + 28px)}
+  .flips{grid-template-columns:1fr}
+  .flip{height:280px}
+  .flip .front h3{font-size:36px}
+  #lb .box.portrait{width:min(92vw,360px)}
+  #lb{padding:16px}
+  footer{flex-direction:column;gap:8px;text-align:center}
+  #toTop{right:14px;bottom:14px;width:44px;height:44px}
+}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div class="grain"></div>
+<div id="progress"></div>
+<div id="wipe"><i></i><i></i><i></i><i></i></div>
+<button id="toTop" type="button" aria-label="Back to top" title="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+</button>
+
+<nav>
+  <div class="logo">RD/CUT</div>
+  <ul>
+    <li><a href="#work" data-wipe>Reel</a></li>
+    <li><a href="#film" data-wipe>Film</a></li>
+    <li><a href="#gallery" data-wipe>Gallery</a></li>
+    <li><a href="#formats" data-wipe>Formats</a></li>
+    <li><a href="#contact" data-wipe>Contact</a></li>
+  </ul>
+  <div class="rec"><i></i>REC</div>
+</nav>
+
+<main>
+<section class="hero">
+  <div class="tc" id="tc">00:00:00:00</div>
+  <h1><span>R</span><span style="animation-delay:.05s">Y</span><span style="animation-delay:.1s">A</span><span style="animation-delay:.15s">N</span><br><span class="o" style="animation-delay:.25s">D</span><span class="o" style="animation-delay:.3s">E</span><span class="o" style="animation-delay:.35s">C</span><span class="o" style="animation-delay:.4s">E</span><span class="o" style="animation-delay:.45s">N</span><span class="o" style="animation-delay:.5s">A</span></h1>
+  <div class="role">AI Video & Multimedia Content Editor</div>
+  <p>Hooks, pacing, captions and AI-generated scenes — short-form and long-form edits built for TikTok, Reels, YouTube and campaigns. Based in Quezon City, cutting for clients worldwide.</p>
+  <div class="scroll-hint">SCROLL ↓ TO PLAY</div>
+</section>
+
+<div class="marquee"><div>
+  <span>AI UGC ✦ SONG ADS ✦ CLAYMATION ✦ PIXAR-STYLE ✦ LIVESTREAMS ✦ MOTION GRAPHICS ✦ CAPCUT ✦ KLING ✦ VEO ✦ SEEDANCE ✦</span>
+  <span>AI UGC ✦ SONG ADS ✦ CLAYMATION ✦ PIXAR-STYLE ✦ LIVESTREAMS ✦ MOTION GRAPHICS ✦ CAPCUT ✦ KLING ✦ VEO ✦ SEEDANCE ✦</span>
+</div></div>
+
+<!-- GALLERY 1: 3D RING -->
+<section id="work">
+  <div class="label rv">01 — Showreel Carousel</div>
+  <h2 class="rv">The Reel</h2>
+  <div class="ring-wrap"><div class="ring" id="ring"></div></div>
+  <div class="ring-ctrl"><button id="prev">← Prev</button><button id="next">Next →</button></div>
+</section>
+
+<!-- GALLERY 2: FILMSTRIP -->
+<section class="film" id="film">
+  <div class="sticky">
+    <div class="label">02 — Filmstrip</div>
+    <h2 style="margin-bottom:32px">Frame by Frame</h2>
+    <div class="track" id="track"></div>
+  </div>
+</section>
+
+<!-- GALLERY 3: MASONRY -->
+<section id="gallery">
+  <div class="label rv">03 — Tilt Gallery</div>
+  <h2 class="rv">Selected Cuts</h2>
+  <div class="filters" id="filters"></div>
+  <div class="masonry" id="masonry"></div>
+</section>
+
+<!-- GALLERY 4: FLIP -->
+<section id="formats">
+  <div class="label rv">04 — Formats</div>
+  <h2 class="rv">What I Make</h2>
+  <div class="flips" id="flips"></div>
+</section>
+
+<!-- GALLERY 5: STACK -->
+<section class="stack-sec">
+  <div class="label rv">05 — Case Stack</div>
+  <h2 class="rv">Experience</h2>
+  <div class="stack" id="stack"></div>
+</section>
+
+<section>
+  <div class="tools">
+    <div>
+      <div class="label rv">06 — Toolkit</div>
+      <h2 class="rv">Edit Bay</h2>
+      <div class="chips rv">
+        <span>CapCut</span><span>Kling</span><span>Google Veo</span><span>Seedance</span><span>Nano Banana Pro</span><span>Google Flow</span><span>Omni Flash</span><span>OpenAI</span><span>Claude</span><span>Livestream</span><span>Poster Design</span>
+      </div>
+    </div>
+    <div class="cube-scene"><div class="cube"><div>CUT</div><div>HOOK</div><div>CAPTION</div><div>GRADE</div><div>AI</div><div>POST</div></div></div>
+  </div>
+</section>
+
+<section>
+  <div class="label rv">07 — Timeline</div>
+  <h2 class="rv">Track Record</h2>
+  <div class="tl">
+    <div class="rv"><span>2024 — 2026</span><h3>AI Video & Content Editor</h3><p>Freelance, international clients — short-form campaigns, AI scenes, and motion graphics.</p></div>
+    <div class="rv"><span>2020 — 2026</span><h3>Multimedia & Social Media Team Lead</h3><p>Church Ministry — weekly content across FB, TikTok, YouTube, IG; livestreams; posters; team lead.</p></div>
+    <div class="rv"><span>2018 — 2022</span><h3>BS Information Technology</h3><p>Quezon City University.</p></div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="label rv">Final Cut</div>
+  <h2 class="rv">Let's Roll</h2>
+  <a class="big rv" href="mailto:ryan.barbacena.decena@gmail.com">ryan.barbacena.decena@gmail.com</a>
+</section>
+<footer><span>© 2022 RYAN DECENA</span><span>QUEZON CITY, PH</span></footer>
+</main>
+
+<div id="lb"><button class="close" type="button" aria-label="Close">✕</button><div class="box"><video id="lbVideo" controls playsinline></video><h3 id="lbTitle"></h3><p id="lbDesc" style="color:var(--muted)"></p></div></div>
+
+<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js"}}</script>
+<script type="module">
+import * as THREE from 'three';
+// ---------- 3D background: floating film reels + shards ----------
+const canvas=document.getElementById('bg');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+const scene=new THREE.Scene();
+scene.fog=new THREE.Fog(0x0b0b0d,8,30);
+const cam=new THREE.PerspectiveCamera(55,1,.1,100);cam.position.z=10;
+scene.add(new THREE.AmbientLight(0xffffff,.6));
+const l1=new THREE.PointLight(0xff3b2f,60);l1.position.set(5,4,6);scene.add(l1);
+const l2=new THREE.PointLight(0x19c3b0,60);l2.position.set(-6,-3,4);scene.add(l2);
+const cols=[0xff3b2f,0xffd23f,0x19c3b0,0xf3efe6];
+const objs=[];
+function reel(){const g=new THREE.Group();
+  const disc=new THREE.Mesh(new THREE.CylinderGeometry(1,1,.15,32),new THREE.MeshStandardMaterial({color:0x222226,metalness:.8,roughness:.3}));disc.rotation.x=Math.PI/2;g.add(disc);
+  for(let i=0;i<5;i++){const h=new THREE.Mesh(new THREE.CylinderGeometry(.22,.22,.2,16),new THREE.MeshStandardMaterial({color:0x0b0b0d}));const a=i/5*Math.PI*2;h.position.set(Math.cos(a)*.55,Math.sin(a)*.55,0);h.rotation.x=Math.PI/2;g.add(h)}
+  return g}
+for(let i=0;i<34;i++){
+  let m;
+  if(i%4===0)m=reel();
+  else{const geos=[new THREE.TorusGeometry(.5,.15,12,32),new THREE.IcosahedronGeometry(.5),new THREE.BoxGeometry(1.2,.7,.08),new THREE.ConeGeometry(.45,.8,3)];
+    m=new THREE.Mesh(geos[i%4],new THREE.MeshStandardMaterial({color:cols[i%4],roughness:.4,metalness:.2,flatShading:true}))}
+  m.position.set((Math.random()-.5)*20,(Math.random()-.5)*60,(Math.random()-.5)*10-2);
+  m.userData={r:new THREE.Vector3(Math.random(),Math.random(),Math.random()).multiplyScalar(.6),y:m.position.y};
+  scene.add(m);objs.push(m)}
+function resize(){renderer.setSize(innerWidth,innerHeight);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix()}
+resize();addEventListener('resize',resize);
+let mx=0,my=0;addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5});
+const clock=new THREE.Clock();
+(function loop(){const dt=Math.min(clock.getDelta(),.05);const s=scrollY/innerHeight;
+  objs.forEach(o=>{o.rotation.x+=o.userData.r.x*dt;o.rotation.y+=o.userData.r.y*dt;o.position.y=o.userData.y+s*4});
+  cam.position.x+=(mx*3-cam.position.x)*.05;cam.position.y+=(-my*2-cam.position.y)*.05;cam.rotation.z=s*.05;cam.lookAt(0,0,0);
+  renderer.render(scene,cam);requestAnimationFrame(loop)})();
+</script>
+
+<script>
+const G=[
+ 'linear-gradient(135deg,#ff3b2f,#ffd23f)','linear-gradient(160deg,#19c3b0,#0b3b5c)','linear-gradient(120deg,#2b1a4a,#ff3b2f)',
+ 'linear-gradient(200deg,#ffd23f,#19c3b0)','linear-gradient(135deg,#f3efe6,#8d887d)','linear-gradient(45deg,#0b3b5c,#ffd23f)',
+ 'radial-gradient(circle at 30% 30%,#ff7a59,#3a0d0d)','linear-gradient(90deg,#19c3b0,#ff3b2f)'];
+const works=[
+ // Ads
+ {t:'Ads 1',c:'ads',d:'Ads',src:'vids/Ads/ads-1.mp4',ar:'9/16',desc:'Paid social ad cut — hook-first pacing for campaigns.'},
+ {t:'Ads 3',c:'ads',d:'Ads',src:'vids/Ads/ads-3.mp4',ar:'9/16',desc:'Campaign ad edit with punch-ins and captions.'},
+ // Long Form
+ {t:'Tatay Jun',c:'long',d:'Long Form',src:'vids/LONG FORM/TATAY JUN1.mp4',ar:'16/9',desc:'Long-form narrative edit.'},
+ {t:'Teaser',c:'long',d:'Long Form',src:'vids/LONG FORM/TEASER.mp4',ar:'16/9',desc:'Long-form teaser cut.'},
+ // Real Estate
+ {t:'Real Estate 1',c:'real',d:'Real Estate',src:'vids/RealState/1.mp4',ar:'9/16',desc:'Property showcase edit.'},
+ {t:'Real Estate 2',c:'real',d:'Real Estate',src:'vids/RealState/real-2.mp4',ar:'9/16',desc:'Real estate promo cutdown.'},
+ {t:'Sample Project',c:'real',d:'Real Estate',src:'vids/RealState/Sample Project.mp4',ar:'9/16',desc:'Sample real estate project film.'},
+ // Reels
+ {t:'Reels 1',c:'reels',d:'Reels',src:'vids/Reels/1.mp4',ar:'9/16',desc:'Vertical reel for Instagram & TikTok.'},
+ {t:'Reels 2',c:'reels',d:'Reels',src:'vids/Reels/2.mp4',ar:'9/16',desc:'Vertical reel with trend-driven pacing.'},
+ {t:'Reels',c:'reels',d:'Reels',src:'vids/Reels/reels.mp4',ar:'9/16',desc:'Short reel cut.'},
+ {t:'Sample Video',c:'reels',d:'Reels',src:'vids/Reels/SAMPLE VIDEO.mp4',ar:'9/16',desc:'Sample reel edit.'},
+ // Short Form
+ {t:'Short Form 1',c:'short',d:'Short Form',src:'vids/Short Forms/1.mp4',ar:'9/16',desc:'Short-form social edit.'},
+ {t:'Date Smarter',c:'short',d:'Short Form',src:'vids/Short Forms/MarketGoons_DateSmarter_Pyramid_V2.mp4',ar:'9/16',desc:'MarketGoons — Date Smarter Pyramid campaign cut.'},
+ {t:'Podcast 1',c:'short',d:'Short Form',src:'vids/Short Forms/podcast 1.mov',ar:'9/16',desc:'Podcast highlight clip.'},
+ {t:'Short Podcast',c:'short',d:'Short Form',src:'vids/Short Forms/short-podcast.mp4',ar:'9/16',desc:'Short-form podcast cutdown.'},
+ // Video AI
+ {t:'Daily Brew AI',c:'ai',d:'Video AI',src:'vids/Video AI/DAILY BREW - AI.mp4',ar:'9/16',desc:'AI-generated coffee / daily brew spot.'},
+ {t:'Dog AI',c:'ai',d:'Video AI',src:'vids/Video AI/DOG AI.mp4',ar:'9/16',desc:'AI pet / product scene edit.'},
+ {t:'Product AI',c:'ai',d:'Video AI',src:'vids/Video AI/PRODUCT AI.mp4',ar:'9/16',desc:'AI product showcase.'},
+ {t:'Water AI',c:'ai',d:'Video AI',src:'vids/Video AI/WATER.mp4',ar:'9/16',desc:'AI water product ad.'},
+ {t:'Soda AI',c:'ai',d:'Video AI',src:'vids/Video AI/SODA AI.mp4',ar:'9/16',desc:'AI soda / beverage spot.'},
+ {t:'Skin Care AI',c:'ai',d:'Video AI',src:'vids/Video AI/Skin care ai.mp4',ar:'9/16',desc:'AI skincare UGC-style ad.'},
+ {t:'Skin Care AI 2',c:'ai',d:'Video AI',src:'vids/Video AI/Skin care ai 2.mp4',ar:'9/16',desc:'AI skincare variation 2.'},
+ {t:'Skin Care AI 3',c:'ai',d:'Video AI',src:'vids/Video AI/Skin care ai 3.mp4',ar:'9/16',desc:'AI skincare variation 3.'}];
+const esc=s=>encodeURI(s).replace(/'/g,'%27');
+const isWide=w=>w.ar==='16/9';
+const thumb=(w,i)=>{
+  const ratio=w.ar||'9/16';
+  return `<div class="clip" data-i="${i}"><div class="thumb" style="--ar:${ratio}"><video muted loop playsinline preload="metadata" src="${esc(w.src)}#t=0.5"></video><div class="play"><b></b></div></div><div class="meta"><strong>${w.t}</strong><span>${w.d}</span></div></div>`;
+};
+
+// ring — featured cuts (mix of categories)
+const ring=document.getElementById('ring');const N=8;let rot=0;
+const featured=[0,2,4,7,11,12,15,20];
+featured.forEach((fi,i)=>{const w=works[fi];ring.insertAdjacentHTML('beforeend',thumb(w,fi));const el=ring.lastElementChild;el.style.transform=`rotateY(${i*360/N}deg) translateZ(380px)`});
+const setRing=()=>ring.style.transform=`rotateY(${rot}deg)`;ring.style.transition='transform 1s cubic-bezier(.3,1.3,.5,1)';
+prev.onclick=()=>{rot+=360/N;setRing()};next.onclick=()=>{rot-=360/N;setRing()};
+let auto=setInterval(()=>{rot-=360/N;setRing()},3000);ring.parentElement.onmouseenter=()=>clearInterval(auto);
+
+// film — portrait vs landscape frame widths
+const track=document.getElementById('track');
+works.forEach((w,i)=>track.insertAdjacentHTML('beforeend',`<div class="frame${isWide(w)?' wide':''}">${thumb(w,i)}<div class="n">SC ${String(i+1).padStart(2,'0')} — ${w.t}</div></div>`));
+
+// masonry
+const cats={all:'All',ads:'Ads',ai:'Video AI',short:'Short',reels:'Reels',long:'Long',real:'Real Estate'};
+const mas=document.getElementById('masonry'),fil=document.getElementById('filters');
+works.forEach((w,i)=>mas.insertAdjacentHTML('beforeend',`<div class="item${isWide(w)?' wide':''}" data-c="${w.c}">${thumb(w,i)}</div>`));
+Object.entries(cats).forEach(([k,v],i)=>{const b=document.createElement('button');b.textContent=v;if(!i)b.classList.add('on');
+  b.onclick=()=>{fil.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+    mas.querySelectorAll('.item').forEach((it,j)=>{const show=k==='all'||it.dataset.c===k;it.style.opacity=0;it.style.scale=.8;
+      setTimeout(()=>{it.classList.toggle('hide',!show);requestAnimationFrame(()=>{it.style.opacity=1;it.style.scale=1})},200+j*30)})};fil.appendChild(b)});
+mas.querySelectorAll('.item').forEach(it=>{it.onmousemove=e=>{const r=it.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;it.style.transform=`perspective(700px) rotateY(${x*20}deg) rotateX(${-y*20}deg) translateZ(20px)`};it.onmouseleave=()=>it.style.transform=''});
+
+// flips
+const fmts=[['Short-Form','Hooks in the first second, captions, punch-ins and loops built for TikTok, Reels and Shorts.'],['AI Scenes','Kling, Veo, Seedance and Google Flow scenes stitched into stories that feel shot, not prompted.'],['Motion GFX','Text overlays, lower thirds, kinetic type and transitions that keep eyes glued.'],['Livestream','Setup, switching and monitoring for weekly services and live events.'],['Ads & Cutdowns','Campaign ads and cutdowns for every aspect ratio and length a brand needs.'],['Long-Form','Full edits and teasers with pacing, grade and titles that hold attention.']];
+fmts.forEach(([t,d],i)=>flips.insertAdjacentHTML('beforeend',`<div class="flip rv"><div class="in2"><div class="face front" style="--g:${G[i]}"><div class="label" style="color:#0b0b0d">0${i+1}</div><h3>${t}</h3></div><div class="face back"><h3 style="font-size:36px">${t}</h3><p>${d}</p></div></div></div>`));
+
+// stack — video editor experience only (matched sample clips)
+const exp=[
+ ['2024 — 2026','AI Video & Content Editor','Freelance · International',['Short-form social & campaign edits','AI UGC, song ads, claymation, Pixar-style','Motion graphics & CapCut variations'],15],
+ ['2020 — 2026','Multimedia Team Lead','Church Ministry',['Weekly content on 4 platforms','Livestream production','Poster & promo design'],2]
+];
+exp.forEach(([y,t,s,l,vi],i)=>stack.insertAdjacentHTML('beforeend',`<div class="card" style="top:${120+i*24}px"><div><div class="yr">${y}</div><h3>${t}</h3><div style="color:var(--teal);margin-top:8px">${s}</div><ul>${l.map(x=>`<li>${x}</li>`).join('')}</ul></div>${thumb(works[vi],vi)}</div>`));
+
+// lightbox
+const lbVideo=document.getElementById('lbVideo');
+const lbBox=lb.querySelector('.box');
+function closeLb(){lb.classList.remove('on');lbVideo.pause();lbVideo.removeAttribute('src');lbVideo.load()}
+document.addEventListener('click',e=>{
+  const t=e.target.closest('.clip[data-i]');
+  if(t){const w=works[+t.dataset.i];lbVideo.src=esc(w.src);lbTitle.textContent=w.t;lbDesc.textContent=w.desc;lbBox.classList.toggle('portrait',!isWide(w));lbBox.classList.toggle('landscape',isWide(w));lb.classList.add('on');lbVideo.play().catch(()=>{})}
+  else if(e.target.closest('#lb .close')||e.target===lb)closeLb()
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&lb.classList.contains('on'))closeLb()});
+
+// hover preview
+document.querySelectorAll('.clip').forEach(cl=>{
+  const v=cl.querySelector('video');if(!v)return;
+  cl.addEventListener('mouseenter',()=>v.play().catch(()=>{}));
+  cl.addEventListener('mouseleave',()=>{v.pause();try{v.currentTime=.5}catch(_){}});
+});
+
+// reveal
+const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('in')),{threshold:.15});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+// scroll effects
+const film=document.getElementById('film'),cards=[...document.querySelectorAll('.stack .card')];
+const toTop=document.getElementById('toTop');
+toTop.onclick=()=>scrollTo({top:0,behavior:'smooth'});
+function onScroll(){const h=document.documentElement;progress.style.width=scrollY/(h.scrollHeight-innerHeight)*100+'%';
+  toTop.classList.toggle('show',scrollY>500);
+  const r=film.getBoundingClientRect(),p=Math.min(Math.max(-r.top/(r.height-innerHeight),0),1);
+  track.style.transform=`translateX(${-p*(track.scrollWidth-innerWidth*.9)}px)`;
+  track.querySelectorAll('.frame').forEach((f,i)=>{f.style.transform=`rotateZ(${Math.sin(p*10+i)*3}deg) translateY(${Math.cos(p*8+i)*20}px)`});
+  cards.forEach((c,i)=>{const n=cards[i+1];if(!n)return;const d=Math.max(0,Math.min(1,(innerHeight-n.getBoundingClientRect().top)/innerHeight));c.style.transform=`scale(${1-d*.08}) rotateX(${d*8}deg)`;c.style.filter=`brightness(${1-d*.5})`});
+  const f=Math.floor(scrollY/4);tc.textContent=`00:${String(Math.floor(f/1440)%60).padStart(2,'0')}:${String(Math.floor(f/24)%60).padStart(2,'0')}:${String(f%24).padStart(2,'0')}`}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+// wipe transition
+document.querySelectorAll('[data-wipe]').forEach(a=>a.onclick=e=>{e.preventDefault();const w=document.getElementById('wipe');w.classList.remove('go');void w.offsetWidth;w.classList.add('go');
+  setTimeout(()=>document.querySelector(a.getAttribute('href')).scrollIntoView({behavior:'instant'}),450)});
+</script>
+</body>
+</html>
