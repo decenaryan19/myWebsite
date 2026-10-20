@@ -400,7 +400,8 @@ const works=[
  {t:'Skin Care AI',c:'ai',d:'Video AI',src:'vids/Video AI/Skin care ai.mp4',ar:'9/16',desc:'AI skincare UGC-style ad.'},
  {t:'Skin Care AI 2',c:'ai',d:'Video AI',src:'vids/Video AI/Skin care ai 2.mp4',ar:'9/16',desc:'AI skincare variation 2.'},
  {t:'Skin Care AI 3',c:'ai',d:'Video AI',src:'vids/Video AI/Skin care ai 3.mp4',ar:'9/16',desc:'AI skincare variation 3.'}];
-const esc=s=>encodeURI(s).replace(/'/g,'%27');
+const MEDIA='https://raw.githubusercontent.com/decenaryan19/myWebsite/main/video/';
+const esc=s=>MEDIA+encodeURI(s).replace(/'/g,'%27');
 const isWide=w=>w.ar==='16/9';
 const thumb=(w,i)=>{
   const ratio=w.ar||'9/16';
